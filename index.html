@@ -10,17 +10,16 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0d0d0d;--bg2:#161616;--bg3:#1f1f1f;--bg4:#252525;
+  --bg:#0d0d0d;--bg2:#161616;--bg3:#1f1f1f;
   --b:rgba(255,255,255,0.08);--b2:rgba(255,255,255,0.15);
   --t:#f0ede8;--t2:#8a8680;--t3:#5a5754;
   --a:#c8f060;--ad:rgba(200,240,96,0.12);--ab:rgba(200,240,96,0.3);
-  --red:#ff5a5a;--amb:#ffb340;--blu:#5ab4ff;--grn:#5af0a0;
+  --red:#ff5a5a;--amb:#ffb340;--blu:#5ab4ff;
   --r:12px;--rs:8px;
   --mono:'DM Mono',monospace;--sans:'Syne',sans-serif;
 }
 html,body{height:100%;background:var(--bg);color:var(--t);font-family:var(--sans);overflow-x:hidden}
 
-/* ── SHARED ── */
 .logo{font-size:1.05rem;font-weight:800;letter-spacing:-.03em}
 .logo span{color:var(--a)}
 label{display:block;font-size:.67rem;color:var(--t2);font-family:var(--mono);margin-bottom:.35rem;letter-spacing:.04em}
@@ -34,25 +33,22 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
 .btnp:hover{opacity:.88}.btnp:active{transform:scale(.98)}.btnp:disabled{opacity:.25;cursor:not-allowed}
 .btng{width:100%;padding:.68rem;background:transparent;color:var(--t3);border:1px solid var(--b);border-radius:var(--rs);font-family:var(--sans);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .15s;margin-top:.55rem}
 .btng:hover{border-color:var(--b2);color:var(--t2)}
-.chip{font-family:var(--mono);font-size:.63rem;padding:2px 8px;border-radius:20px;border:1px solid var(--b);color:var(--t2);background:var(--bg3)}
-.cbox{color:var(--amb);border-color:rgba(255,179,64,.25);background:rgba(255,179,64,.06)}
-.cusr{color:var(--blu);border-color:rgba(90,180,255,.25);background:rgba(90,180,255,.06)}
 #toast{position:fixed;bottom:5rem;left:50%;transform:translateX(-50%) translateY(16px);background:var(--bg2);border:1px solid var(--b2);border-radius:var(--rs);padding:.6rem 1.1rem;font-family:var(--mono);font-size:.73rem;opacity:0;transition:all .2s;pointer-events:none;white-space:nowrap;z-index:999}
 #toast.s{opacity:1;transform:translateX(-50%) translateY(0)}
 #toast.ok{border-color:var(--a);color:var(--a)}
 #toast.er{border-color:var(--red);color:var(--red)}
 
-/* ── NO ACCESS ── */
+/* SIN ACCESO */
 #no-access{display:none;min-height:100vh;align-items:center;justify-content:center;flex-direction:column;padding:2rem;text-align:center}
 #no-access.v{display:flex}
 .err-box{background:rgba(255,90,90,.07);border:1px solid rgba(255,90,90,.18);border-radius:var(--r);padding:1.2rem 1.4rem;margin-top:1.5rem;max-width:300px}
 .err-box p{font-family:var(--mono);font-size:.75rem;color:var(--red);line-height:1.7}
 
-/* ── REVOCADO ── */
+/* REVOCADO */
 #revoked{display:none;min-height:100vh;align-items:center;justify-content:center;flex-direction:column;padding:2rem;text-align:center}
 #revoked.v{display:flex}
 
-/* ── OPERADOR APP ── */
+/* OPERADOR */
 #op-app{display:none;flex-direction:column;min-height:100vh}
 #op-app.v{display:flex}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:.82rem 1.1rem;border-bottom:1px solid var(--b);background:var(--bg);position:sticky;top:0;z-index:10}
@@ -89,6 +85,9 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
 .rsku{font-family:var(--mono);font-size:.86rem;font-weight:500;color:var(--a)}
 .rtime{font-family:var(--mono);font-size:.63rem;color:var(--t3)}
 .rchips{display:flex;gap:5px;flex-wrap:wrap}
+.chip{font-family:var(--mono);font-size:.63rem;padding:2px 8px;border-radius:20px;border:1px solid var(--b);color:var(--t2);background:var(--bg3)}
+.cbox{color:var(--amb);border-color:rgba(255,179,64,.25);background:rgba(255,179,64,.06)}
+.cusr{color:var(--blu);border-color:rgba(90,180,255,.25);background:rgba(90,180,255,.06)}
 .emp{text-align:center;padding:3rem 1rem;color:var(--t3)}
 .emp svg{width:34px;height:34px;margin:0 auto .8rem;display:block;opacity:.3}
 .emp p{font-family:var(--mono);font-size:.73rem;line-height:1.7}
@@ -98,7 +97,7 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
 .nb svg{width:21px;height:21px}
 .nb span{font-size:.56rem;font-weight:600;letter-spacing:.04em}
 
-/* ── ADMIN APP ── */
+/* ADMIN */
 #adm{display:none;min-height:100vh;padding:1.4rem 1rem 3rem;max-width:640px;margin:0 auto}
 #adm.v{display:block}
 .adm-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.3rem}
@@ -110,8 +109,6 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
 .sl{font-family:var(--mono);font-size:.6rem;color:var(--t3);letter-spacing:.07em;margin-bottom:.3rem}
 .sv{font-size:1.7rem;font-weight:800;line-height:1}
 .ss{font-family:var(--mono);font-size:.62rem;color:var(--t2);margin-top:.2rem}
-
-/* tabla operadores */
 .op-card{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:.85rem 1rem;margin-bottom:.6rem;transition:border-color .15s}
 .op-card:hover{border-color:var(--b2)}
 .op-top{display:flex;align-items:center;gap:10px;margin-bottom:.6rem}
@@ -119,7 +116,7 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
 .op-info{flex:1;min-width:0}
 .op-name{font-size:.88rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .op-loc{font-family:var(--mono);font-size:.65rem;color:var(--t2)}
-.op-actions{display:flex;gap:5px;flex-wrap:wrap}
+.op-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:.65rem}
 .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .don{background:var(--a)}.dof{background:var(--red)}
 .bsm{font-family:var(--mono);font-size:.62rem;padding:3px 9px;border-radius:20px;border:1px solid var(--b2);background:transparent;color:var(--t2);cursor:pointer;transition:all .15s;white-space:nowrap}
@@ -129,13 +126,9 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
 .bsm-copy:hover{border-color:var(--a);color:var(--a)}
 .op-link-row{background:var(--bg3);border-radius:6px;padding:.4rem .7rem;font-family:var(--mono);font-size:.62rem;color:var(--t3);word-break:break-all;line-height:1.5}
 .op-recs{font-family:var(--mono);font-size:.7rem;color:var(--t3);margin-top:.4rem}
-
-/* botón añadir operador */
 .btn-add{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:.75rem;background:var(--ad);border:1px dashed var(--ab);border-radius:var(--rs);color:var(--a);font-family:var(--sans);font-size:.86rem;font-weight:700;cursor:pointer;transition:all .15s;margin-bottom:.6rem}
 .btn-add:hover{background:rgba(200,240,96,.18)}
 .btn-add svg{width:18px;height:18px}
-
-/* modal */
 #modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);align-items:flex-end;justify-content:center;z-index:200;padding:1rem}
 #modal-bg.open{display:flex}
 .modal-sheet{background:var(--bg2);border:1px solid var(--b2);border-radius:var(--r) var(--r) 0 0;padding:1.5rem 1.2rem 2rem;width:100%;max-width:480px}
@@ -144,29 +137,25 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
 .modal-actions{display:flex;gap:.7rem;margin-top:.4rem}
 .modal-actions .btnp{margin:0}
 .modal-actions .btng{margin:0;width:auto;padding:.7rem 1.2rem}
-
 .btn-exp{padding:.6rem 1.1rem;background:transparent;color:var(--t2);border:1px solid var(--b2);border-radius:var(--rs);font-family:var(--sans);font-size:.8rem;font-weight:600;cursor:pointer;transition:all .15s}
 .btn-exp:hover{border-color:var(--a);color:var(--a)}
-
 .adm-rec-card{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:.8rem 1rem;margin-bottom:.5rem}
 .adm-rec-card:hover{border-color:var(--b2)}
 </style>
 </head>
 <body>
 
-<!-- SIN ACCESO -->
 <div id="no-access">
   <div class="logo" style="font-size:1.5rem;font-weight:800;letter-spacing:-.04em">Scan<span>Stock</span></div>
   <div class="err-box"><p>Este link no es válido o no tienes acceso asignado.<br><br>Pide al administrador tu link personal.</p></div>
 </div>
 
-<!-- REVOCADO -->
 <div id="revoked">
   <div class="logo" style="font-size:1.5rem;font-weight:800;letter-spacing:-.04em">Scan<span>Stock</span></div>
   <div class="err-box"><p>Tu acceso ha sido desactivado.<br><br>Contacta al administrador.</p></div>
 </div>
 
-<!-- ══ APP OPERADOR ══ -->
+<!-- OPERADOR -->
 <div id="op-app">
   <div class="topbar">
     <div class="logo">Scan<span>Stock</span></div>
@@ -218,16 +207,14 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
   </nav>
 </div>
 
-<!-- ══ ADMIN ══ -->
+<!-- ADMIN -->
 <div id="adm">
   <div class="adm-header">
     <div class="logo" style="font-size:1.3rem">Scan<span>Stock</span></div>
     <button class="btn-exp" onclick="exportCSV()">Descargar CSV</button>
   </div>
   <div class="adm-sub">PANEL DE ADMINISTRACIÓN</div>
-
   <div class="sgrid" id="stats"></div>
-
   <div class="sec">
     <div class="sec-title">Operadores</div>
     <button class="btn-add" onclick="openModal()">
@@ -236,24 +223,23 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
     </button>
     <div id="op-list"></div>
   </div>
-
   <div class="sec">
     <div class="sec-title">Todos los registros</div>
     <div id="adm-recs"></div>
   </div>
 </div>
 
-<!-- MODAL NUEVO OPERADOR -->
+<!-- MODAL -->
 <div id="modal-bg">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
-    <h3 id="modal-title">Agregar operador</h3>
+    <h3>Agregar operador</h3>
     <div class="fg"><label>Nombre completo</label><input type="text" id="m-name" placeholder="María Ramírez" maxlength="40"></div>
-    <div class="fg"><label>Ubicación / turno</label><input type="text" id="m-loc" placeholder="Bodega Norte, Turno A" maxlength="40"></div>
-    <div class="fg"><label>Código de acceso (se genera automáticamente)</label><input type="text" id="m-code" readonly placeholder="Se generará al guardar"></div>
+    <div class="fg"><label>Ubicación / turno</label><input type="text" id="m-loc" placeholder="Bodega Norte" maxlength="40"></div>
+    <div class="fg"><label>Código generado automáticamente</label><input type="text" id="m-code" readonly placeholder="Se genera al guardar"></div>
     <div class="modal-actions">
       <button class="btng" style="width:auto" onclick="closeModal()">Cancelar</button>
-      <button class="btnp" onclick="saveOperator()">Guardar operador</button>
+      <button class="btnp" onclick="saveOperator()">Guardar y copiar link</button>
     </div>
   </div>
 </div>
@@ -261,94 +247,82 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
 <div id="toast"></div>
 
 <script>
-// ══ STORAGE KEYS ══
 const KEY_OPS  = 'ss_operators';
 const KEY_RECS = 'ss_recs';
-const ADMIN_CODE = 'admin-master-2024'; // cambia esto en producción
 
-// ══ DEMO SKUs ══
-const DEMO = ['7506666098000','6098001234567','8437006563014','5010555048879','4902430015127'];
+// ── TU URL Y CÓDIGO DE ADMIN ──
+const BASE_URL   = 'https://rossyf.github.io/scanstock/';
+const ADMIN_CODE = 'admin';
+
+const DEMO=['7506666098000','6098001234567','8437006563014','5010555048879','4902430015127'];
 let di=0, currentOp=null, scannedSku='';
 
-// ══ HELPERS ══
-function loadOps()  { return JSON.parse(localStorage.getItem(KEY_OPS)  || '[]'); }
-function loadRecs() { return JSON.parse(localStorage.getItem(KEY_RECS) || '[]'); }
-function saveOps(ops)   { localStorage.setItem(KEY_OPS,  JSON.stringify(ops));  }
-function saveRecs(recs) { localStorage.setItem(KEY_RECS, JSON.stringify(recs)); }
+function loadOps()      { return JSON.parse(localStorage.getItem(KEY_OPS)  || '[]'); }
+function loadRecs()     { return JSON.parse(localStorage.getItem(KEY_RECS) || '[]'); }
+function saveOps(d)     { localStorage.setItem(KEY_OPS,  JSON.stringify(d)); }
+function saveRecs(d)    { localStorage.setItem(KEY_RECS, JSON.stringify(d)); }
 
 function genCode(name) {
-  const slug = name.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'').slice(0,12);
-  const rand = Math.random().toString(36).slice(2,7);
-  return 'op-' + slug + '-' + rand;
+  const slug=name.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'').slice(0,10);
+  const rand=Math.random().toString(36).slice(2,6);
+  return 'op-'+slug+'-'+rand;
 }
+function initials(n){ return n.trim().split(' ').map(w=>w[0]||'').join('').toUpperCase().slice(0,2); }
 
-function initials(name) {
-  return name.trim().split(' ').map(w=>w[0]||'').join('').toUpperCase().slice(0,2);
-}
+// ── ARRANQUE ──
+window.addEventListener('DOMContentLoaded',()=>{
+  const p=new URLSearchParams(window.location.search);
+  const code=p.get('op')||p.get('u')||'';
 
-function baseUrl() {
-  return window.location.origin + window.location.pathname;
-}
+  if(!code){ document.getElementById('no-access').classList.add('v'); return; }
+  if(code===ADMIN_CODE){ showAdmin(); return; }
 
-// ══ ARRANQUE ══
-window.addEventListener('DOMContentLoaded', () => {
-  const p = new URLSearchParams(window.location.search);
-  const code = p.get('op') || p.get('u') || '';
+  const op=loadOps().find(o=>o.code===code);
+  if(!op){ document.getElementById('no-access').classList.add('v'); return; }
+  if(op.status==='revoked'){ document.getElementById('revoked').classList.add('v'); return; }
 
-  if (!code) {
-    // demo: muestra admin si no hay parámetro
-    showAdmin(); return;
-  }
-  if (code === ADMIN_CODE) { showAdmin(); return; }
-
-  const ops = loadOps();
-  const op = ops.find(o => o.code === code);
-  if (!op) { document.getElementById('no-access').classList.add('v'); return; }
-  if (op.status === 'revoked') { document.getElementById('revoked').classList.add('v'); return; }
-
-  currentOp = op;
-  showOperatorApp();
+  currentOp=op;
+  showOpApp();
 });
 
-// ══ OPERADOR ══
-function showOperatorApp() {
+// ── OPERADOR ──
+function showOpApp(){
   document.getElementById('op-app').classList.add('v');
-  const op = currentOp;
-  document.getElementById('op-av').textContent = initials(op.name);
-  document.getElementById('op-name').textContent = op.name.split(' ')[0];
-  document.getElementById('op-loc').textContent = op.location;
-  document.getElementById('fusr').value = op.name;
-  tick(); setInterval(tick, 30000);
+  document.getElementById('op-av').textContent=initials(currentOp.name);
+  document.getElementById('op-name').textContent=currentOp.name.split(' ')[0];
+  document.getElementById('op-loc').textContent=currentOp.location;
+  document.getElementById('fusr').value=currentOp.name;
+  tick(); setInterval(tick,30000);
   renderMyRecs();
 }
 
-function tick() {
-  const n = new Date();
-  document.getElementById('fdt').value = n.toLocaleDateString('es-MX') + ' ' + n.toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'});
+function tick(){
+  const n=new Date();
+  document.getElementById('fdt').value=n.toLocaleDateString('es-MX')+' '+n.toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'});
 }
 
-function doScan() {
-  const sl = document.getElementById('sline'), ch = document.getElementById('chint');
+function doScan(){
+  const sl=document.getElementById('sline'),ch=document.getElementById('chint');
   sl.style.display='block'; ch.textContent='Escaneando…';
   setTimeout(()=>{
     sl.style.display='none'; ch.textContent='Toca para escanear';
-    const s = DEMO[di % DEMO.length]; di++;
-    setSku(s); document.getElementById('fsku').value = s;
-  }, 1400);
+    const s=DEMO[di%DEMO.length]; di++;
+    setSku(s); document.getElementById('fsku').value=s;
+  },1400);
 }
 
-function onSku(v) {
-  if(v.length >= 6) setSku(v.trim());
-  else { scannedSku=''; setSkuD('','e'); document.getElementById('bsave').disabled=true; }
+function onSku(v){
+  if(v.length>=6) setSku(v.trim());
+  else{ scannedSku=''; setSkuD('','e'); document.getElementById('bsave').disabled=true; }
 }
-function setSku(v) { scannedSku=v; setSkuD(v,''); document.getElementById('bsave').disabled=false; }
-function setSkuD(v,c) {
+function setSku(v){ scannedSku=v; setSkuD(v,''); document.getElementById('bsave').disabled=false; }
+function setSkuD(v,c){
   const d=document.getElementById('skud');
-  d.textContent = v||'— sin escanear —';
+  d.textContent=v||'— sin escanear —';
   d.className='skud'+(c?' '+c:'');
 }
 
-function save() {
+function save(){
   if(!scannedSku){toast('Escanea o ingresa un código','er');return}
   const box=document.getElementById('fbox').value.trim();
   if(!box){toast('Ingresa el # de caja','er');return}
@@ -359,64 +333,62 @@ function save() {
   resetForm(); renderMyRecs();
 }
 
-function resetForm() {
+function resetForm(){
   ['fsku','fbox','fnotes'].forEach(id=>document.getElementById(id).value='');
   scannedSku=''; setSkuD('','e'); document.getElementById('bsave').disabled=true;
 }
 
-function renderMyRecs() {
+function renderMyRecs(){
   const mine=loadRecs().filter(r=>r.opCode===currentOp.code);
   const list=document.getElementById('rlist');
   document.getElementById('rcnt').textContent=mine.length+(mine.length===1?' entrada':' entradas');
-  if(!mine.length){ list.innerHTML='<div class="emp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg><p>Sin registros todavía.<br>Escanea tu primer código.</p></div>'; return; }
+  if(!mine.length){
+    list.innerHTML='<div class="emp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg><p>Sin registros todavía.<br>Escanea tu primer código.</p></div>';
+    return;
+  }
   list.innerHTML=mine.map(r=>`<div class="rcard"><div class="rtop"><span class="rsku">${r.sku}</span><span class="rtime">${r.dt}</span></div><div class="rchips"><span class="chip cbox">Caja: ${r.box}</span>${r.notes?`<span class="chip">${r.notes}</span>`:''}</div></div>`).join('');
 }
 
-function goTab(tab) {
+function goTab(tab){
   ['scan','records'].forEach(t=>{document.getElementById('tab-'+t)?.classList.remove('a');document.getElementById('nav-'+t)?.classList.remove('a')});
   document.getElementById('tab-'+tab)?.classList.add('a');
   document.getElementById('nav-'+tab)?.classList.add('a');
   if(tab==='records') renderMyRecs();
 }
 
-// ══ ADMIN ══
-function showAdmin() {
+// ── ADMIN ──
+function showAdmin(){
   document.getElementById('adm').classList.add('v');
   renderAdmin();
 }
 
-function renderAdmin() {
+function renderAdmin(){
   const ops=loadOps(), recs=loadRecs();
   const boxes=[...new Set(recs.map(r=>r.box))];
   const skus=[...new Set(recs.map(r=>r.sku))];
 
-  // stats
   document.getElementById('stats').innerHTML=`
     <div class="sc"><div class="sl">REGISTROS</div><div class="sv">${recs.length}</div><div class="ss">total acumulado</div></div>
     <div class="sc"><div class="sl">CAJAS</div><div class="sv">${boxes.length}</div><div class="ss">${boxes.slice(0,2).join(', ')||'—'}</div></div>
     <div class="sc"><div class="sl">SKUs ÚNICOS</div><div class="sv">${skus.length}</div><div class="ss">códigos distintos</div></div>
     <div class="sc"><div class="sl">OPERADORES</div><div class="sv">${ops.length}</div><div class="ss">${ops.filter(o=>o.status==='active').length} activos</div></div>`;
 
-  // operadores
   const opList=document.getElementById('op-list');
   if(!ops.length){
     opList.innerHTML='<div class="emp" style="padding:1.5rem 0"><p>Aún no hay operadores.<br>Agrega el primero con el botón de arriba.</p></div>';
   } else {
     opList.innerHTML=ops.map(op=>{
-      const link=baseUrl()+'?op='+op.code;
+      const link=BASE_URL+'?op='+op.code;
       const opRecs=recs.filter(r=>r.opCode===op.code).length;
       return `<div class="op-card">
         <div class="op-top">
           <div class="op-av">${initials(op.name)}</div>
-          <div class="op-info">
-            <div class="op-name">${op.name}</div>
-            <div class="op-loc">${op.location}</div>
-          </div>
+          <div class="op-info"><div class="op-name">${op.name}</div><div class="op-loc">${op.location}</div></div>
           <div class="dot ${op.status==='active'?'don':'dof'}"></div>
         </div>
         <div class="op-link-row">${link}</div>
         <div class="op-recs">${opRecs} registro${opRecs!==1?'s':''}</div>
-        <div class="op-actions" style="margin-top:.65rem">
+        <div class="op-actions">
           <button class="bsm bsm-copy" onclick="copyLink('${link}','${op.name.split(' ')[0]}')">Copiar link</button>
           <button class="bsm ${op.status==='revoked'?'bsm-success':'bsm-danger'}" onclick="toggleOp('${op.code}')">${op.status==='active'?'Revocar':'Restaurar'}</button>
           <button class="bsm bsm-danger" onclick="deleteOp('${op.code}')">Eliminar</button>
@@ -425,7 +397,6 @@ function renderAdmin() {
     }).join('');
   }
 
-  // registros
   const admRecs=document.getElementById('adm-recs');
   if(!recs.length){
     admRecs.innerHTML='<div class="emp" style="padding:1.5rem 0"><p>Sin registros todavía.</p></div>';
@@ -438,67 +409,57 @@ function renderAdmin() {
   }
 }
 
-// ══ GESTIÓN OPERADORES ══
-function openModal(editCode) {
-  document.getElementById('m-name').value = '';
-  document.getElementById('m-loc').value  = '';
-  document.getElementById('m-code').value = '';
-  document.getElementById('modal-title').textContent = 'Agregar operador';
+// ── GESTIÓN OPERADORES ──
+function openModal(){
+  ['m-name','m-loc','m-code'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('modal-bg').classList.add('open');
-  setTimeout(()=>document.getElementById('m-name').focus(), 100);
+  setTimeout(()=>document.getElementById('m-name').focus(),100);
 }
+function closeModal(){ document.getElementById('modal-bg').classList.remove('open'); }
 
-function closeModal() { document.getElementById('modal-bg').classList.remove('open'); }
-
-function saveOperator() {
-  const name = document.getElementById('m-name').value.trim();
-  const loc  = document.getElementById('m-loc').value.trim();
-  if(!name){ toast('Ingresa el nombre del operador','er'); return; }
-  if(!loc){  toast('Ingresa la ubicación','er'); return; }
-
-  const ops = loadOps();
-  const code = genCode(name);
-  ops.push({ code, name, location:loc, status:'active', createdAt: new Date().toLocaleString('es-MX') });
+function saveOperator(){
+  const name=document.getElementById('m-name').value.trim();
+  const loc =document.getElementById('m-loc').value.trim();
+  if(!name){toast('Ingresa el nombre','er');return}
+  if(!loc) {toast('Ingresa la ubicación','er');return}
+  const ops=loadOps();
+  const code=genCode(name);
+  ops.push({code,name,location:loc,status:'active',createdAt:new Date().toLocaleString('es-MX')});
   saveOps(ops);
   closeModal();
   renderAdmin();
-
-  // copiar link automáticamente
-  const link = baseUrl()+'?op='+code;
-  copyLink(link, name.split(' ')[0]);
-  toast('Operador creado — link copiado','ok');
+  const link=BASE_URL+'?op='+code;
+  copyLink(link,name.split(' ')[0]);
 }
 
-function toggleOp(code) {
+function toggleOp(code){
   const ops=loadOps();
   const op=ops.find(o=>o.code===code);
-  if(!op) return;
-  op.status = op.status==='active'?'revoked':'active';
-  saveOps(ops);
-  renderAdmin();
-  toast(op.status==='revoked'?'Acceso revocado':'Acceso restaurado', op.status==='revoked'?'er':'ok');
+  if(!op)return;
+  op.status=op.status==='active'?'revoked':'active';
+  saveOps(ops); renderAdmin();
+  toast(op.status==='revoked'?'Acceso revocado':'Acceso restaurado',op.status==='revoked'?'er':'ok');
 }
 
-function deleteOp(code) {
-  if(!confirm('¿Eliminar este operador? Sus registros se conservan.')) return;
+function deleteOp(code){
+  if(!confirm('¿Eliminar este operador? Sus registros se conservan.'))return;
   saveOps(loadOps().filter(o=>o.code!==code));
   renderAdmin();
   toast('Operador eliminado','er');
 }
 
-function copyLink(link, name) {
-  const fallback = () => {
+function copyLink(link,name){
+  const fb=()=>{
     const ta=document.createElement('textarea');
     ta.value=link; document.body.appendChild(ta); ta.select();
     document.execCommand('copy'); document.body.removeChild(ta);
     toast('Link de '+name+' copiado','ok');
   };
-  if(navigator.clipboard){
-    navigator.clipboard.writeText(link).then(()=>toast('Link de '+name+' copiado','ok')).catch(fallback);
-  } else { fallback(); }
+  if(navigator.clipboard) navigator.clipboard.writeText(link).then(()=>toast('Link de '+name+' copiado','ok')).catch(fb);
+  else fb();
 }
 
-function exportCSV() {
+function exportCSV(){
   const recs=loadRecs();
   if(!recs.length){toast('No hay registros para exportar','er');return}
   const h=['ID','SKU','Caja','Operador','Ubicación','Fecha/Hora','Notas'];
@@ -509,15 +470,13 @@ function exportCSV() {
   toast('CSV descargado','ok');
 }
 
-// ══ TOAST ══
 function toast(msg,type='ok'){
   const t=document.getElementById('toast');
   t.textContent=msg; t.className='s '+type;
   setTimeout(()=>t.className='',2400);
 }
 
-// cerrar modal al tocar fuera
-document.getElementById('modal-bg').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeModal(); });
+document.getElementById('modal-bg').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
 </script>
 </body>
 </html>
