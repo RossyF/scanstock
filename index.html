@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#0d0d0d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>ScanStock</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0d0d;--bg2:#161616;--bg3:#1f1f1f;
+  --b:rgba(255,255,255,0.08);--b2:rgba(255,255,255,0.15);
+  --t:#f0ede8;--t2:#8a8680;--t3:#5a5754;
+  --a:#c8f060;--ad:rgba(200,240,96,0.12);--ab:rgba(200,240,96,0.3);
+  --red:#ff5a5a;--amb:#ffb340;--blu:#5ab4ff;
+  --r:12px;--rs:8px;
+  --mono:'DM Mono',monospace;--sans:'Syne',sans-serif;
+}
+html,body{height:100%;background:var(--bg);color:var(--t);font-family:var(--sans);overflow-x:hidden}
+
+/* ── PANTALLA SIN ACCESO ── */
+#no-access{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center}
+#no-access .logo{font-size:1.8rem;font-weight:800;letter-spacing:-.04em;margin-bottom:.3rem}
+#no-access .logo span{color:var(--a)}
+#no-access p{font-family:var(--mono);font-size:.78rem;color:var(--t2);max-width:280px;line-height:1.7;margin-top:.5rem}
+.err-box{background:rgba(255,90,90,.08);border:1px solid rgba(255,90,90,.2);border-radius:var(--r);padding:1.2rem 1.5rem;margin-top:2rem;max-width:300px}
+.err-box p{font-family:var(--mono);font-size:.75rem;color:var(--red);line-height:1.6}
+
+/* ── PANTALLA ADMIN ── */
+#admin-screen{display:none;min-height:100vh;padding:1.5rem 1rem 3rem;max-width:620px;margin:0 auto}
+#admin-screen h1{font-size:1.4rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.2rem}
+#admin-screen h1 span{color:var(--a)}
+.admin-sub{font-family:var(--mono);font-size:.68rem;color:var(--t3);letter-spacing:.08em;margin-bottom:2rem}
+.sec-title{font-family:var(--mono);font-size:.65rem;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;padding-bottom:.5rem;border-bottom:1px solid var(--b);margin-bottom:.9rem}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.8rem}
+.sc{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:1rem}
+.sl{font-family:var(--mono);font-size:.6rem;color:var(--t3);letter-spacing:.07em;margin-bottom:.3rem}
+.sv{font-size:1.8rem;font-weight:800;line-height:1;color:var(--t)}
+.ss{font-family:var(--mono);font-size:.63rem;color:var(--t2);margin-top:.2rem}
+
+/* tabla operadores */
+.op-table{width:100%;border-collapse:collapse;margin-bottom:1.8rem;font-size:.82rem}
+.op-table th{font-family:var(--mono);font-size:.63rem;color:var(--t3);letter-spacing:.07em;text-align:left;padding:.5rem .8rem;border-bottom:1px solid var(--b)}
+.op-table td{padding:.65rem .8rem;border-bottom:1px solid var(--b);vertical-align:middle}
+.op-table tr:last-child td{border-bottom:none}
+.op-name{font-weight:600;font-size:.84rem}
+.op-link{font-family:var(--mono);font-size:.65rem;color:var(--t3)}
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block}
+.don{background:var(--a)}
+.dof{background:var(--red)}
+.brev{font-family:var(--mono);font-size:.63rem;padding:3px 9px;border-radius:20px;border:1px solid var(--b2);background:transparent;color:var(--t3);cursor:pointer;transition:all .15s;white-space:nowrap}
+.brev:hover{border-color:var(--red);color:var(--red)}
+.bres{border-color:var(--ab)!important;color:var(--a)!important}
+.bcopy{font-family:var(--mono);font-size:.63rem;padding:3px 9px;border-radius:20px;border:1px solid var(--b);background:transparent;color:var(--t2);cursor:pointer;transition:all .15s;white-space:nowrap}
+.bcopy:hover{border-color:var(--a);color:var(--a)}
+.btn-exp{padding:.6rem 1.2rem;background:transparent;color:var(--t2);border:1px solid var(--b2);border-radius:var(--rs);font-family:var(--sans);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .15s}
+.btn-exp:hover{border-color:var(--a);color:var(--a)}
+
+/* registros admin */
+.rcard{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:.85rem 1rem;margin-bottom:.5rem}
+.rcard:hover{border-color:var(--b2)}
+.rtop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.4rem}
+.rsku{font-family:var(--mono);font-size:.86rem;font-weight:500;color:var(--a)}
+.rtime{font-family:var(--mono);font-size:.63rem;color:var(--t3)}
+.rchips{display:flex;gap:5px;flex-wrap:wrap}
+.chip{font-family:var(--mono);font-size:.63rem;padding:2px 7px;border-radius:20px;border:1px solid var(--b);color:var(--t2);background:var(--bg3)}
+.cbox{color:var(--amb);border-color:rgba(255,179,64,.25);background:rgba(255,179,64,.06)}
+.cusr{color:var(--blu);border-color:rgba(90,180,255,.25);background:rgba(90,180,255,.06)}
+
+/* ── APP OPERADOR ── */
+#app{display:none;flex-direction:column;min-height:100vh}
+#app.v{display:flex}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.1rem;border-bottom:1px solid var(--b);background:var(--bg);position:sticky;top:0;z-index:10}
+.tlogo{font-size:1rem;font-weight:800;letter-spacing:-.03em}
+.tlogo span{color:var(--a)}
+.tuser{display:flex;align-items:center;gap:8px}
+.tav{width:30px;height:30px;border-radius:50%;background:var(--ad);border:1px solid var(--ab);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:var(--a)}
+.tname{font-family:var(--mono);font-size:.72rem;color:var(--t2)}
+.tloc{font-family:var(--mono);font-size:.6rem;color:var(--t3)}
+
+.main{flex:1;padding:1.2rem 1rem 6rem;max-width:540px;margin:0 auto;width:100%}
+.tc{display:none}.tc.a{display:block}
+
+.card{background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);padding:1.3rem;margin-bottom:1rem}
+.clbl{font-family:var(--mono);font-size:.65rem;color:var(--t3);letter-spacing:.09em;text-transform:uppercase;margin-bottom:1rem}
+
+/* camara */
+.cambox{background:#000;border-radius:var(--rs);aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:1rem;cursor:pointer;position:relative;overflow:hidden;border:1px solid var(--b2);transition:border-color .2s}
+.cambox:hover{border-color:var(--ab)}
+.cx{width:110px;height:70px;position:relative}
+.cc{position:absolute;width:22px;height:22px;border:2px solid var(--a)}
+.c1{top:0;left:0;border-right:none;border-bottom:none;border-radius:3px 0 0 0}
+.c2{top:0;right:0;border-left:none;border-bottom:none;border-radius:0 3px 0 0}
+.c3{bottom:0;left:0;border-right:none;border-top:none;border-radius:0 0 0 3px}
+.c4{bottom:0;right:0;border-left:none;border-top:none;border-radius:0 0 3px 0}
+.chint{font-family:var(--mono);font-size:.7rem;color:var(--t3);margin-top:1rem;transition:color .2s}
+.cambox:hover .chint{color:var(--a)}
+@keyframes sl{0%{top:12%}100%{top:85%}}
+.sline{position:absolute;left:8%;right:8%;height:1.5px;background:var(--a);opacity:.85;box-shadow:0 0 8px var(--a);animation:sl 1.4s ease-in-out infinite alternate}
+
+/* form */
+.fg{margin-bottom:.9rem}
+label{display:block;font-size:.67rem;color:var(--t2);font-family:var(--mono);margin-bottom:.35rem;letter-spacing:.04em}
+input[type=text]{width:100%;background:var(--bg3);border:1px solid var(--b);border-radius:var(--rs);padding:.7rem .9rem;color:var(--t);font-family:var(--mono);font-size:.88rem;outline:none;transition:border-color .15s}
+input[type=text]:focus{border-color:var(--a)}
+input[type=text]::placeholder{color:var(--t3)}
+input[type=text]:read-only{color:var(--t2);opacity:.65;cursor:not-allowed}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.skud{background:var(--bg3);border:1px solid var(--b);border-radius:var(--rs);padding:.7rem .9rem;font-family:var(--mono);font-size:1rem;font-weight:500;color:var(--a);min-height:44px;display:flex;align-items:center;letter-spacing:.03em}
+.skud.e{color:var(--t3);font-size:.75rem;font-weight:400}
+.fbox label{color:var(--a)}
+.fbox input{border-color:var(--ab);background:rgba(200,240,96,.04)}
+.fbox input:focus{border-color:var(--a)}
+
+/* botones */
+.btnp{width:100%;padding:.86rem;background:var(--a);color:#0d0d0d;border:none;border-radius:var(--rs);font-family:var(--sans);font-size:.9rem;font-weight:700;cursor:pointer;transition:opacity .15s,transform .1s}
+.btnp:hover{opacity:.88}.btnp:active{transform:scale(.98)}.btnp:disabled{opacity:.25;cursor:not-allowed}
+.btng{width:100%;padding:.7rem;background:transparent;color:var(--t3);border:1px solid var(--b);border-radius:var(--rs);font-family:var(--sans);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .15s;margin-top:.6rem}
+.btng:hover{border-color:var(--b2);color:var(--t2)}
+
+/* toast */
+#toast{position:fixed;bottom:5.5rem;left:50%;transform:translateX(-50%) translateY(16px);background:var(--bg2);border:1px solid var(--b2);border-radius:var(--rs);padding:.65rem 1.2rem;font-family:var(--mono);font-size:.74rem;opacity:0;transition:all .22s;pointer-events:none;white-space:nowrap;z-index:99}
+#toast.s{opacity:1;transform:translateX(-50%) translateY(0)}
+#toast.ok{border-color:var(--a);color:var(--a)}
+#toast.er{border-color:var(--red);color:var(--red)}
+
+/* registros operador */
+.rh{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.rh h3{font-size:.88rem;font-weight:700}
+.rcnt{font-family:var(--mono);font-size:.68rem;color:var(--t2)}
+.emp{text-align:center;padding:3rem 1rem;color:var(--t3)}
+.emp svg{width:34px;height:34px;margin:0 auto .8rem;display:block;opacity:.3}
+.emp p{font-family:var(--mono);font-size:.73rem;line-height:1.7}
+
+/* nav */
+.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg);border-top:1px solid var(--b);display:flex;padding:.4rem 0 .7rem;z-index:10}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;color:var(--t3);border:none;background:none;font-family:var(--sans);padding:.3rem 0;transition:color .15s}
+.nb.a{color:var(--a)}
+.nb svg{width:21px;height:21px}
+.nb span{font-size:.56rem;font-weight:600;letter-spacing:.04em}
+
+/* revocado */
+#revoked-screen{display:none;min-height:100vh;align-items:center;justify-content:center;flex-direction:column;padding:2rem;text-align:center}
+#revoked-screen.v{display:flex}
+</style>
+</head>
+<body>
+
+<!-- SIN ACCESO -->
+<div id="no-access" style="display:none">
+  <div class="logo">Scan<span>Stock</span></div>
+  <p>Sistema de inventario por escaneo</p>
+  <div class="err-box">
+    <p>Este link no es válido o no tienes acceso asignado.<br><br>Pide al administrador que te comparta tu link personal.</p>
+  </div>
+</div>
+
+<!-- ACCESO REVOCADO -->
+<div id="revoked-screen">
+  <div class="logo" style="font-size:1.6rem;font-weight:800;letter-spacing:-.04em;margin-bottom:.3rem">Scan<span style="color:var(--a)">Stock</span></div>
+  <div class="err-box" style="margin-top:1.5rem">
+    <p>Tu acceso ha sido desactivado.<br><br>Contacta al administrador si crees que es un error.</p>
+  </div>
+</div>
+
+<!-- ══ APP OPERADOR ══ -->
+<div id="app">
+  <div class="topbar">
+    <div class="tlogo">Scan<span>Stock</span></div>
+    <div class="tuser">
+      <div class="tav" id="tav"></div>
+      <div>
+        <div class="tname" id="tname"></div>
+        <div class="tloc" id="tloc"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <!-- TAB ESCANEAR -->
+    <div class="tc a" id="tab-scan">
+      <div class="card">
+        <div class="clbl">Cámara</div>
+        <div class="cambox" id="cambox" onclick="doScan()">
+          <div class="cx"><div class="cc c1"></div><div class="cc c2"></div><div class="cc c3"></div><div class="cc c4"></div></div>
+          <div class="sline" id="sline" style="display:none"></div>
+          <div class="chint" id="chint">Toca para escanear</div>
+        </div>
+        <div class="fg">
+          <label>O ingresa el código manualmente</label>
+          <input type="text" id="fsku" placeholder="750666609800…" oninput="onSku(this.value)" autocomplete="off">
+        </div>
+        <div class="fg">
+          <label>SKU capturado</label>
+          <div class="skud e" id="skud">— sin escanear —</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="clbl">Datos del registro</div>
+        <div class="fg fbox">
+          <label># de caja</label>
+          <input type="text" id="fbox" placeholder="CAJA-042" maxlength="30">
+        </div>
+        <div class="frow">
+          <div class="fg"><label>Operador</label><input type="text" id="fusr" readonly></div>
+          <div class="fg"><label>Fecha y hora</label><input type="text" id="fdt" readonly></div>
+        </div>
+        <div class="fg"><label>Notas (opcional)</label><input type="text" id="fnotes" placeholder="Observaciones…" maxlength="120"></div>
+        <button class="btnp" id="bsave" onclick="save()" disabled>Guardar registro</button>
+        <button class="btng" onclick="resetForm()">Limpiar</button>
+      </div>
+    </div>
+
+    <!-- TAB MIS REGISTROS -->
+    <div class="tc" id="tab-records">
+      <div class="rh"><h3>Mis registros</h3><span class="rcnt" id="rcnt">0 entradas</span></div>
+      <div id="rlist"></div>
+    </div>
+  </div>
+
+  <nav class="bnav">
+    <button class="nb a" id="nav-scan" onclick="go('scan')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7V5a2 2 0 012-2h2M17 3h2a2 2 0 012 2v2M21 17v2a2 2 0 01-2 2h-2M7 21H5a2 2 0 01-2-2v-2"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg>
+      <span>Escanear</span>
+    </button>
+    <button class="nb" id="nav-records" onclick="go('records')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+      <span>Mis registros</span>
+    </button>
+  </nav>
+</div>
+
+<!-- ══ PANEL ADMIN ══ -->
+<div id="admin-screen">
+  <h1>Scan<span>Stock</span></h1>
+  <div class="admin-sub">PANEL DE ADMINISTRACIÓN</div>
+
+  <div class="sec-title">Resumen general</div>
+  <div class="sgrid" id="stats-grid"></div>
+
+  <div class="sec-title">Operadores y links de acceso</div>
+  <table class="op-table" id="op-table">
+    <thead>
+      <tr>
+        <th>Operador</th>
+        <th>Ubicación</th>
+        <th>Registros</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="op-tbody"></tbody>
+  </table>
+
+  <div class="sec-title">Todos los registros</div>
+  <div style="margin-bottom:1rem;display:flex;gap:.8rem;flex-wrap:wrap;align-items:center">
+    <button class="btn-exp" onclick="exportCSV()">Descargar CSV</button>
+    <span id="admin-rec-count" style="font-family:var(--mono);font-size:.7rem;color:var(--t3)"></span>
+  </div>
+  <div id="admin-rlist"></div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ══ BASE DE OPERADORES ══
+// Para producción: este objeto vendría de Google Apps Script
+// Cada operador tiene: nombre, ubicación, código único (parte del URL), estado
+const OPERATORS = {
+  'op-maria-x7k2':  { name:'María Ramírez', location:'Bodega Norte',   initials:'MR', status:'active' },
+  'op-juan-p9m4':   { name:'Juan González', location:'Bodega Sur',     initials:'JG', status:'active' },
+  'op-carlos-w3n8': { name:'Carlos Silva',  location:'Almacén Central',initials:'CS', status:'active' },
+  'op-ana-q5r1':    { name:'Ana Torres',    location:'Bodega Norte',   initials:'AT', status:'active' },
+};
+const ADMIN_CODE = 'admin-zx99-master'; // tu link de admin
+
+// ══ DEMO SKUs ══
+const DEMO=['7506666098000','6098001234567','8437006563014','5010555048879','4902430015127'];
+let di=0, currentOp=null, scannedSku='';
+let allRecs = JSON.parse(localStorage.getItem('ss_recs')||'[]');
+
+// ══ ARRANQUE ══
+window.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('op') || params.get('u');
+
+  // ADMIN
+  if (code === ADMIN_CODE) {
+    document.getElementById('admin-screen').style.display='block';
+    renderAdmin();
+    return;
+  }
+
+  // DEMO sin parámetro: mostrar como primer operador (para pruebas)
+  const demoCode = code || Object.keys(OPERATORS)[0];
+
+  if (!OPERATORS[demoCode]) {
+    document.getElementById('no-access').style.display='flex';
+    return;
+  }
+
+  const op = OPERATORS[demoCode];
+
+  if (op.status === 'revoked') {
+    document.getElementById('revoked-screen').classList.add('v');
+    return;
+  }
+
+  currentOp = { code: demoCode, ...op };
+  startApp();
+});
+
+function startApp() {
+  const op = currentOp;
+  document.getElementById('app').classList.add('v');
+  const av = document.getElementById('tav');
+  av.textContent = op.initials;
+  document.getElementById('tname').textContent = op.name.split(' ')[0];
+  document.getElementById('tloc').textContent = op.location;
+  document.getElementById('fusr').value = op.name;
+  tick(); setInterval(tick, 30000);
+  renderMyRecs();
+}
+
+function tick() {
+  const n = new Date();
+  document.getElementById('fdt').value =
+    n.toLocaleDateString('es-MX') + ' ' +
+    n.toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'});
+}
+
+// ══ ESCANEO ══
+function doScan() {
+  const sl=document.getElementById('sline'), ch=document.getElementById('chint');
+  sl.style.display='block'; ch.textContent='Escaneando…';
+  setTimeout(()=>{
+    sl.style.display='none'; ch.textContent='Toca para escanear';
+    const s=DEMO[di%DEMO.length]; di++;
+    setSku(s);
+    document.getElementById('fsku').value=s;
+  }, 1400);
+}
+
+function onSku(v) {
+  if(v.length>=6) setSku(v.trim());
+  else { scannedSku=''; setSkuDisplay('','e'); document.getElementById('bsave').disabled=true; }
+}
+
+function setSku(v) {
+  scannedSku=v;
+  setSkuDisplay(v,'');
+  document.getElementById('bsave').disabled=false;
+}
+
+function setSkuDisplay(v,cls) {
+  const d=document.getElementById('skud');
+  d.textContent = v||'— sin escanear —';
+  d.className='skud'+(cls?' '+cls:'');
+}
+
+// ══ GUARDAR ══
+function save() {
+  if(!scannedSku){toast('Escanea o ingresa un código','er');return}
+  const box=document.getElementById('fbox').value.trim();
+  if(!box){toast('Ingresa el # de caja','er');return}
+
+  const rec = {
+    id: Date.now(),
+    sku: scannedSku,
+    box,
+    opCode: currentOp.code,
+    opName: currentOp.name,
+    location: currentOp.location,
+    dt: new Date().toLocaleString('es-MX'),
+    notes: document.getElementById('fnotes').value.trim()
+  };
+  allRecs.unshift(rec);
+  localStorage.setItem('ss_recs', JSON.stringify(allRecs));
+  toast('Registro guardado','ok');
+  resetForm();
+  renderMyRecs();
+}
+
+function resetForm() {
+  ['fsku','fbox','fnotes'].forEach(id=>document.getElementById(id).value='');
+  scannedSku='';
+  setSkuDisplay('','e');
+  document.getElementById('bsave').disabled=true;
+}
+
+// ══ MIS REGISTROS ══
+function renderMyRecs() {
+  const mine = allRecs.filter(r=>r.opCode===currentOp.code);
+  const list=document.getElementById('rlist');
+  const cnt=document.getElementById('rcnt');
+  cnt.textContent = mine.length+(mine.length===1?' entrada':' entradas');
+  if(!mine.length){
+    list.innerHTML='<div class="emp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg><p>Sin registros todavía.<br>Escanea tu primer código.</p></div>';
+    return;
+  }
+  list.innerHTML=mine.map(r=>`
+    <div class="rcard">
+      <div class="rtop"><span class="rsku">${r.sku}</span><span class="rtime">${r.dt}</span></div>
+      <div class="rchips">
+        <span class="chip cbox">Caja: ${r.box}</span>
+        ${r.notes?`<span class="chip">${r.notes}</span>`:''}
+      </div>
+    </div>`).join('');
+}
+
+// ══ NAV ══
+function go(tab) {
+  ['scan','records'].forEach(t=>{
+    document.getElementById('tab-'+t)?.classList.remove('a');
+    document.getElementById('nav-'+t)?.classList.remove('a');
+  });
+  document.getElementById('tab-'+tab)?.classList.add('a');
+  document.getElementById('nav-'+tab)?.classList.add('a');
+  if(tab==='records') renderMyRecs();
+}
+
+// ══ ADMIN ══
+function renderAdmin() {
+  // stats
+  const boxes=[...new Set(allRecs.map(r=>r.box))];
+  const skus=[...new Set(allRecs.map(r=>r.sku))];
+  document.getElementById('stats-grid').innerHTML=`
+    <div class="sc"><div class="sl">REGISTROS TOTAL</div><div class="sv">${allRecs.length}</div><div class="ss">todos los operadores</div></div>
+    <div class="sc"><div class="sl">CAJAS ÚNICAS</div><div class="sv">${boxes.length}</div><div class="ss">${boxes.slice(0,3).join(', ')||'—'}</div></div>
+    <div class="sc"><div class="sl">SKUs DISTINTOS</div><div class="sv">${skus.length}</div><div class="ss">códigos únicos</div></div>
+    <div class="sc"><div class="sl">OPERADORES</div><div class="sv">${Object.keys(OPERATORS).length}</div><div class="ss">${Object.values(OPERATORS).filter(o=>o.status==='active').length} activos</div></div>`;
+
+  // tabla operadores
+  const tbody=document.getElementById('op-tbody');
+  tbody.innerHTML=Object.entries(OPERATORS).map(([code,op])=>{
+    const opRecs=allRecs.filter(r=>r.opCode===code).length;
+    const baseUrl=window.location.origin+window.location.pathname;
+    const link=`${baseUrl}?op=${code}`;
+    return `<tr>
+      <td><div class="op-name">${op.name}</div><div class="op-link">${code}</div></td>
+      <td style="font-size:.78rem;color:var(--t2)">${op.location}</td>
+      <td style="font-family:var(--mono);font-size:.82rem">${opRecs}</td>
+      <td><span class="dot ${op.status==='active'?'don':'dof'}"></span></td>
+      <td style="display:flex;gap:5px;flex-wrap:wrap;padding:.65rem .8rem">
+        <button class="bcopy" onclick="copyLink('${link}','${op.name.split(' ')[0]}')">Copiar link</button>
+        <button class="brev ${op.status==='revoked'?'bres':''}" onclick="toggleOp('${code}')">${op.status==='active'?'Revocar':'Restaurar'}</button>
+      </td>
+    </tr>`;
+  }).join('');
+
+  // registros
+  const cnt=document.getElementById('admin-rec-count');
+  cnt.textContent=allRecs.length+(allRecs.length===1?' registro':' registros');
+  const list=document.getElementById('admin-rlist');
+  if(!allRecs.length){
+    list.innerHTML='<div class="emp" style="padding:2rem 1rem"><p>Sin registros aún.</p></div>';
+    return;
+  }
+  list.innerHTML=allRecs.map(r=>`
+    <div class="rcard">
+      <div class="rtop"><span class="rsku">${r.sku}</span><span class="rtime">${r.dt}</span></div>
+      <div class="rchips">
+        <span class="chip cbox">Caja: ${r.box}</span>
+        <span class="chip cusr">${r.opName}</span>
+        <span class="chip" style="color:var(--t3)">${r.location}</span>
+        ${r.notes?`<span class="chip">${r.notes}</span>`:''}
+      </div>
+    </div>`).join('');
+}
+
+function copyLink(link, name) {
+  navigator.clipboard.writeText(link).then(()=>{
+    toast(`Link de ${name} copiado`,'ok');
+  }).catch(()=>{
+    // fallback
+    const ta=document.createElement('textarea');
+    ta.value=link; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+    toast(`Link de ${name} copiado`,'ok');
+  });
+}
+
+function toggleOp(code) {
+  OPERATORS[code].status = OPERATORS[code].status==='active'?'revoked':'active';
+  renderAdmin();
+  toast(OPERATORS[code].status==='revoked'?'Acceso revocado':'Acceso restaurado',
+        OPERATORS[code].status==='revoked'?'er':'ok');
+}
+
+function exportCSV() {
+  const h=['ID','SKU','Caja','Operador','Ubicación','Fecha/Hora','Notas'];
+  const rows=allRecs.map(r=>[r.id,r.sku,r.box,r.opName,r.location,r.dt,r.notes||'']
+    .map(v=>`"${String(v).replace(/"/g,'""')}"`).join(','));
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([[h.join(','),...rows].join('\n')],{type:'text/csv;charset=utf-8'}));
+  a.download='inventario_'+new Date().toISOString().split('T')[0]+'.csv';
+  a.click();
+  toast('CSV descargado','ok');
+}
+
+// ══ TOAST ══
+function toast(msg,type='ok'){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className='s '+type;
+  setTimeout(()=>t.className='',2400);
+}
+</script>
+</body>
+</html>
