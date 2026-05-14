@@ -20,6 +20,7 @@
 }
 html,body{height:100%;background:var(--bg);color:var(--t);font-family:var(--sans);overflow-x:hidden}
 
+/* ── SHARED ── */
 .logo{font-size:1.05rem;font-weight:800;letter-spacing:-.03em}
 .logo span{color:var(--a)}
 label{display:block;font-size:.67rem;color:var(--t2);font-family:var(--mono);margin-bottom:.35rem;letter-spacing:.04em}
@@ -33,22 +34,26 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
 .btnp:hover{opacity:.88}.btnp:active{transform:scale(.98)}.btnp:disabled{opacity:.25;cursor:not-allowed}
 .btng{width:100%;padding:.68rem;background:transparent;color:var(--t3);border:1px solid var(--b);border-radius:var(--rs);font-family:var(--sans);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .15s;margin-top:.55rem}
 .btng:hover{border-color:var(--b2);color:var(--t2)}
+
+/* ── LOADING ── */
+#loading{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;z-index:500}
+.spinner{width:32px;height:32px;border:2px solid var(--b2);border-top-color:var(--a);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-family:var(--mono);font-size:.72rem;color:var(--t3)}
+
+/* ── TOAST ── */
 #toast{position:fixed;bottom:5rem;left:50%;transform:translateX(-50%) translateY(16px);background:var(--bg2);border:1px solid var(--b2);border-radius:var(--rs);padding:.6rem 1.1rem;font-family:var(--mono);font-size:.73rem;opacity:0;transition:all .2s;pointer-events:none;white-space:nowrap;z-index:999}
 #toast.s{opacity:1;transform:translateX(-50%) translateY(0)}
 #toast.ok{border-color:var(--a);color:var(--a)}
 #toast.er{border-color:var(--red);color:var(--red)}
 
-/* SIN ACCESO */
-#no-access{display:none;min-height:100vh;align-items:center;justify-content:center;flex-direction:column;padding:2rem;text-align:center}
-#no-access.v{display:flex}
+/* ── SIN ACCESO / REVOCADO ── */
+.full-msg{display:none;min-height:100vh;align-items:center;justify-content:center;flex-direction:column;padding:2rem;text-align:center}
+.full-msg.v{display:flex}
 .err-box{background:rgba(255,90,90,.07);border:1px solid rgba(255,90,90,.18);border-radius:var(--r);padding:1.2rem 1.4rem;margin-top:1.5rem;max-width:300px}
 .err-box p{font-family:var(--mono);font-size:.75rem;color:var(--red);line-height:1.7}
 
-/* REVOCADO */
-#revoked{display:none;min-height:100vh;align-items:center;justify-content:center;flex-direction:column;padding:2rem;text-align:center}
-#revoked.v{display:flex}
-
-/* OPERADOR */
+/* ── OPERADOR APP ── */
 #op-app{display:none;flex-direction:column;min-height:100vh}
 #op-app.v{display:flex}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:.82rem 1.1rem;border-bottom:1px solid var(--b);background:var(--bg);position:sticky;top:0;z-index:10}
@@ -97,7 +102,7 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
 .nb svg{width:21px;height:21px}
 .nb span{font-size:.56rem;font-weight:600;letter-spacing:.04em}
 
-/* ADMIN */
+/* ── ADMIN ── */
 #adm{display:none;min-height:100vh;padding:1.4rem 1rem 3rem;max-width:640px;margin:0 auto}
 #adm.v{display:block}
 .adm-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.3rem}
@@ -109,7 +114,7 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
 .sl{font-family:var(--mono);font-size:.6rem;color:var(--t3);letter-spacing:.07em;margin-bottom:.3rem}
 .sv{font-size:1.7rem;font-weight:800;line-height:1}
 .ss{font-family:var(--mono);font-size:.62rem;color:var(--t2);margin-top:.2rem}
-.op-card{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:.85rem 1rem;margin-bottom:.6rem;transition:border-color .15s}
+.op-card{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:.85rem 1rem;margin-bottom:.6rem}
 .op-card:hover{border-color:var(--b2)}
 .op-top{display:flex;align-items:center;gap:10px;margin-bottom:.6rem}
 .op-av{width:34px;height:34px;border-radius:50%;background:var(--ad);border:1px solid var(--ab);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;color:var(--a);flex-shrink:0}
@@ -120,12 +125,11 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
 .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .don{background:var(--a)}.dof{background:var(--red)}
 .bsm{font-family:var(--mono);font-size:.62rem;padding:3px 9px;border-radius:20px;border:1px solid var(--b2);background:transparent;color:var(--t2);cursor:pointer;transition:all .15s;white-space:nowrap}
-.bsm:hover{border-color:var(--t2);color:var(--t)}
 .bsm-danger:hover{border-color:var(--red)!important;color:var(--red)!important}
 .bsm-success{border-color:var(--ab)!important;color:var(--a)!important}
 .bsm-copy:hover{border-color:var(--a);color:var(--a)}
-.op-link-row{background:var(--bg3);border-radius:6px;padding:.4rem .7rem;font-family:var(--mono);font-size:.62rem;color:var(--t3);word-break:break-all;line-height:1.5}
-.op-recs{font-family:var(--mono);font-size:.7rem;color:var(--t3);margin-top:.4rem}
+.op-link-row{background:var(--bg3);border-radius:6px;padding:.4rem .7rem;font-family:var(--mono);font-size:.62rem;color:var(--t3);word-break:break-all;line-height:1.5;margin-bottom:.3rem}
+.op-recs{font-family:var(--mono);font-size:.7rem;color:var(--t3)}
 .btn-add{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:.75rem;background:var(--ad);border:1px dashed var(--ab);border-radius:var(--rs);color:var(--a);font-family:var(--sans);font-size:.86rem;font-weight:700;cursor:pointer;transition:all .15s;margin-bottom:.6rem}
 .btn-add:hover{background:rgba(200,240,96,.18)}
 .btn-add svg{width:18px;height:18px}
@@ -145,12 +149,21 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
 </head>
 <body>
 
-<div id="no-access">
+<!-- LOADING -->
+<div id="loading">
+  <div class="logo" style="font-size:1.4rem;font-weight:800;letter-spacing:-.04em">Scan<span style="color:#c8f060">Stock</span></div>
+  <div class="spinner"></div>
+  <div class="loading-text" id="loading-text">Verificando acceso…</div>
+</div>
+
+<!-- SIN ACCESO -->
+<div id="no-access" class="full-msg">
   <div class="logo" style="font-size:1.5rem;font-weight:800;letter-spacing:-.04em">Scan<span>Stock</span></div>
   <div class="err-box"><p>Este link no es válido o no tienes acceso asignado.<br><br>Pide al administrador tu link personal.</p></div>
 </div>
 
-<div id="revoked">
+<!-- REVOCADO -->
+<div id="revoked" class="full-msg">
   <div class="logo" style="font-size:1.5rem;font-weight:800;letter-spacing:-.04em">Scan<span>Stock</span></div>
   <div class="err-box"><p>Tu acceso ha sido desactivado.<br><br>Contacta al administrador.</p></div>
 </div>
@@ -173,7 +186,8 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
           <div class="sline" id="sline" style="display:none"></div>
           <div class="chint" id="chint">Toca para escanear</div>
         </div>
-        <div class="fg"><label>O ingresa el código manualmente</label>
+        <div class="fg">
+          <label>O ingresa el código manualmente</label>
           <input type="text" id="fsku" placeholder="750666609800…" oninput="onSku(this.value)" autocomplete="off">
         </div>
         <div class="fg"><label>SKU capturado</label><div class="skud e" id="skud">— sin escanear —</div></div>
@@ -236,10 +250,9 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
     <h3>Agregar operador</h3>
     <div class="fg"><label>Nombre completo</label><input type="text" id="m-name" placeholder="María Ramírez" maxlength="40"></div>
     <div class="fg"><label>Ubicación / turno</label><input type="text" id="m-loc" placeholder="Bodega Norte" maxlength="40"></div>
-    <div class="fg"><label>Código generado automáticamente</label><input type="text" id="m-code" readonly placeholder="Se genera al guardar"></div>
     <div class="modal-actions">
       <button class="btng" style="width:auto" onclick="closeModal()">Cancelar</button>
-      <button class="btnp" onclick="saveOperator()">Guardar y copiar link</button>
+      <button class="btnp" id="btn-save-op" onclick="saveOperator()">Guardar y copiar link</button>
     </div>
   </div>
 </div>
@@ -247,208 +260,268 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
 <div id="toast"></div>
 
 <script>
-const KEY_OPS  = 'ss_operators';
-const KEY_RECS = 'ss_recs';
-
-// ── TU URL Y CÓDIGO DE ADMIN ──
-const BASE_URL   = 'https://rossyf.github.io/scanstock/';
+// ── CONFIGURACIÓN ──
+const API  = 'https://script.google.com/macros/s/AKfycbxxQ2C00cqPfAEMu-IhPX8-1msVg7gIYYARToCqs50EJo9bRE0zYdKIw2wf1rmGH-dBEg/exec';
+const BASE = 'https://rossyf.github.io/scanstock/';
 const ADMIN_CODE = 'admin';
 
-const DEMO=['7506666098000','6098001234567','8437006563014','5010555048879','4902430015127'];
-let di=0, currentOp=null, scannedSku='';
+const DEMO = ['7506666098000','6098001234567','8437006563014','5010555048879','4902430015127'];
+let di=0, currentOp=null, scannedSku='', allRecs=[];
 
-function loadOps()      { return JSON.parse(localStorage.getItem(KEY_OPS)  || '[]'); }
-function loadRecs()     { return JSON.parse(localStorage.getItem(KEY_RECS) || '[]'); }
-function saveOps(d)     { localStorage.setItem(KEY_OPS,  JSON.stringify(d)); }
-function saveRecs(d)    { localStorage.setItem(KEY_RECS, JSON.stringify(d)); }
-
-function genCode(name) {
-  const slug=name.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'').slice(0,10);
-  const rand=Math.random().toString(36).slice(2,6);
-  return 'op-'+slug+'-'+rand;
+// ── API ──
+function api(params) {
+  const url = API + '?' + new URLSearchParams(params).toString();
+  return fetch(url).then(r => r.json());
 }
+
 function initials(n){ return n.trim().split(' ').map(w=>w[0]||'').join('').toUpperCase().slice(0,2); }
 
 // ── ARRANQUE ──
-window.addEventListener('DOMContentLoaded',()=>{
-  const p=new URLSearchParams(window.location.search);
-  const code=p.get('op')||p.get('u')||'';
+window.addEventListener('DOMContentLoaded', async () => {
+  const p    = new URLSearchParams(window.location.search);
+  const code = p.get('op') || p.get('u') || '';
 
-  if(!code){ document.getElementById('no-access').classList.add('v'); return; }
-  if(code===ADMIN_CODE){ showAdmin(); return; }
+  if (!code) { hide(); show('no-access'); return; }
 
-  const op=loadOps().find(o=>o.code===code);
-  if(!op){ document.getElementById('no-access').classList.add('v'); return; }
-  if(op.status==='revoked'){ document.getElementById('revoked').classList.add('v'); return; }
+  if (code === ADMIN_CODE) {
+    hide();
+    document.getElementById('adm').classList.add('v');
+    loadAdmin();
+    return;
+  }
 
-  currentOp=op;
-  showOpApp();
+  // verificar operador en Sheets
+  setLoading('Verificando acceso…');
+  try {
+    const data = await api({ action:'getOperator', code });
+    if (data.error) { hide(); show('no-access'); return; }
+    if (data.status === 'revoked') { hide(); show('revoked'); return; }
+    currentOp = data;
+    hide();
+    startOpApp();
+  } catch(e) {
+    hide(); show('no-access');
+  }
 });
 
+function hide() {
+  document.getElementById('loading').style.display = 'none';
+}
+function show(id) {
+  document.getElementById(id).classList.add('v');
+}
+function setLoading(msg) {
+  document.getElementById('loading-text').textContent = msg;
+}
+
 // ── OPERADOR ──
-function showOpApp(){
+function startOpApp() {
   document.getElementById('op-app').classList.add('v');
-  document.getElementById('op-av').textContent=initials(currentOp.name);
-  document.getElementById('op-name').textContent=currentOp.name.split(' ')[0];
-  document.getElementById('op-loc').textContent=currentOp.location;
-  document.getElementById('fusr').value=currentOp.name;
-  tick(); setInterval(tick,30000);
-  renderMyRecs();
+  document.getElementById('op-av').textContent   = initials(currentOp.name);
+  document.getElementById('op-name').textContent = currentOp.name.split(' ')[0];
+  document.getElementById('op-loc').textContent  = currentOp.location;
+  document.getElementById('fusr').value          = currentOp.name;
+  tick(); setInterval(tick, 30000);
+  loadMyRecs();
 }
 
-function tick(){
-  const n=new Date();
-  document.getElementById('fdt').value=n.toLocaleDateString('es-MX')+' '+n.toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'});
+function tick() {
+  const n = new Date();
+  document.getElementById('fdt').value = n.toLocaleDateString('es-MX') + ' ' + n.toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'});
 }
 
-function doScan(){
-  const sl=document.getElementById('sline'),ch=document.getElementById('chint');
+function doScan() {
+  const sl=document.getElementById('sline'), ch=document.getElementById('chint');
   sl.style.display='block'; ch.textContent='Escaneando…';
   setTimeout(()=>{
     sl.style.display='none'; ch.textContent='Toca para escanear';
     const s=DEMO[di%DEMO.length]; di++;
     setSku(s); document.getElementById('fsku').value=s;
-  },1400);
+  }, 1400);
 }
 
-function onSku(v){
+function onSku(v) {
   if(v.length>=6) setSku(v.trim());
-  else{ scannedSku=''; setSkuD('','e'); document.getElementById('bsave').disabled=true; }
+  else { scannedSku=''; setSkuD('','e'); document.getElementById('bsave').disabled=true; }
 }
-function setSku(v){ scannedSku=v; setSkuD(v,''); document.getElementById('bsave').disabled=false; }
-function setSkuD(v,c){
+function setSku(v) { scannedSku=v; setSkuD(v,''); document.getElementById('bsave').disabled=false; }
+function setSkuD(v,c) {
   const d=document.getElementById('skud');
   d.textContent=v||'— sin escanear —';
   d.className='skud'+(c?' '+c:'');
 }
 
-function save(){
+async function save() {
   if(!scannedSku){toast('Escanea o ingresa un código','er');return}
   const box=document.getElementById('fbox').value.trim();
   if(!box){toast('Ingresa el # de caja','er');return}
-  const recs=loadRecs();
-  recs.unshift({id:Date.now(),sku:scannedSku,box,opCode:currentOp.code,opName:currentOp.name,location:currentOp.location,dt:new Date().toLocaleString('es-MX'),notes:document.getElementById('fnotes').value.trim()});
-  saveRecs(recs);
-  toast('Registro guardado','ok');
-  resetForm(); renderMyRecs();
+
+  const btn=document.getElementById('bsave');
+  btn.disabled=true; btn.textContent='Guardando…';
+
+  try {
+    const res = await api({
+      action: 'saveRecord',
+      code:   currentOp.code,
+      opCode: currentOp.code,
+      sku:    scannedSku,
+      box,
+      notes:  document.getElementById('fnotes').value.trim()
+    });
+    if(res.error){ toast(res.error,'er'); }
+    else { toast('Registro guardado','ok'); resetForm(); loadMyRecs(); }
+  } catch(e) {
+    toast('Error de conexión','er');
+  }
+  btn.disabled=false; btn.textContent='Guardar registro';
 }
 
-function resetForm(){
+function resetForm() {
   ['fsku','fbox','fnotes'].forEach(id=>document.getElementById(id).value='');
-  scannedSku=''; setSkuD('','e'); document.getElementById('bsave').disabled=true;
+  scannedSku=''; setSkuD('','e');
+  document.getElementById('bsave').disabled=true;
 }
 
-function renderMyRecs(){
-  const mine=loadRecs().filter(r=>r.opCode===currentOp.code);
-  const list=document.getElementById('rlist');
-  document.getElementById('rcnt').textContent=mine.length+(mine.length===1?' entrada':' entradas');
-  if(!mine.length){
-    list.innerHTML='<div class="emp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg><p>Sin registros todavía.<br>Escanea tu primer código.</p></div>';
+async function loadMyRecs() {
+  document.getElementById('rlist').innerHTML='<div class="emp"><p>Cargando…</p></div>';
+  try {
+    const res = await api({ action:'getRecords', code: currentOp.code });
+    renderRecs(res.records||[], 'rlist', 'rcnt', false);
+  } catch(e) {
+    document.getElementById('rlist').innerHTML='<div class="emp"><p>Error al cargar registros.</p></div>';
+  }
+}
+
+function renderRecs(recs, listId, cntId, isAdmin) {
+  const list=document.getElementById(listId);
+  const cnt =document.getElementById(cntId);
+  if(cnt) cnt.textContent=recs.length+(recs.length===1?' entrada':' entradas');
+  if(!recs.length){
+    list.innerHTML='<div class="emp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg><p>Sin registros todavía.</p></div>';
     return;
   }
-  list.innerHTML=mine.map(r=>`<div class="rcard"><div class="rtop"><span class="rsku">${r.sku}</span><span class="rtime">${r.dt}</span></div><div class="rchips"><span class="chip cbox">Caja: ${r.box}</span>${r.notes?`<span class="chip">${r.notes}</span>`:''}</div></div>`).join('');
+  list.innerHTML=recs.map(r=>`
+    <div class="${isAdmin?'adm-rec-card':'rcard'}">
+      <div class="rtop"><span class="rsku">${r.sku}</span><span class="rtime">${r.dt}</span></div>
+      <div class="rchips">
+        <span class="chip cbox">Caja: ${r.box}</span>
+        ${isAdmin?`<span class="chip cusr">${r.opName}</span><span class="chip" style="color:var(--t3)">${r.location||''}</span>`:''}
+        ${r.notes?`<span class="chip">${r.notes}</span>`:''}
+      </div>
+    </div>`).join('');
 }
 
-function goTab(tab){
-  ['scan','records'].forEach(t=>{document.getElementById('tab-'+t)?.classList.remove('a');document.getElementById('nav-'+t)?.classList.remove('a')});
+function goTab(tab) {
+  ['scan','records'].forEach(t=>{
+    document.getElementById('tab-'+t)?.classList.remove('a');
+    document.getElementById('nav-'+t)?.classList.remove('a');
+  });
   document.getElementById('tab-'+tab)?.classList.add('a');
   document.getElementById('nav-'+tab)?.classList.add('a');
-  if(tab==='records') renderMyRecs();
+  if(tab==='records') loadMyRecs();
 }
 
 // ── ADMIN ──
-function showAdmin(){
-  document.getElementById('adm').classList.add('v');
-  renderAdmin();
+async function loadAdmin() {
+  // stats
+  try {
+    const s = await api({ action:'getStats', code: ADMIN_CODE });
+    document.getElementById('stats').innerHTML=`
+      <div class="sc"><div class="sl">REGISTROS</div><div class="sv">${s.totalRecords||0}</div><div class="ss">total acumulado</div></div>
+      <div class="sc"><div class="sl">CAJAS</div><div class="sv">${s.totalBoxes||0}</div><div class="ss">únicas</div></div>
+      <div class="sc"><div class="sl">SKUs</div><div class="sv">${s.totalSkus||0}</div><div class="ss">distintos</div></div>
+      <div class="sc"><div class="sl">OPERADORES</div><div class="sv">${s.activeOps||0}</div><div class="ss">activos de ${s.totalOps||0}</div></div>`;
+  } catch(e){}
+
+  // operadores
+  try {
+    const res = await api({ action:'getOperators', code: ADMIN_CODE });
+    renderOperators(res.operators||[]);
+  } catch(e){}
+
+  // registros
+  try {
+    const res = await api({ action:'getRecords', code: ADMIN_CODE });
+    allRecs = res.records||[];
+    renderRecs(allRecs, 'adm-recs', null, true);
+  } catch(e){}
 }
 
-function renderAdmin(){
-  const ops=loadOps(), recs=loadRecs();
-  const boxes=[...new Set(recs.map(r=>r.box))];
-  const skus=[...new Set(recs.map(r=>r.sku))];
-
-  document.getElementById('stats').innerHTML=`
-    <div class="sc"><div class="sl">REGISTROS</div><div class="sv">${recs.length}</div><div class="ss">total acumulado</div></div>
-    <div class="sc"><div class="sl">CAJAS</div><div class="sv">${boxes.length}</div><div class="ss">${boxes.slice(0,2).join(', ')||'—'}</div></div>
-    <div class="sc"><div class="sl">SKUs ÚNICOS</div><div class="sv">${skus.length}</div><div class="ss">códigos distintos</div></div>
-    <div class="sc"><div class="sl">OPERADORES</div><div class="sv">${ops.length}</div><div class="ss">${ops.filter(o=>o.status==='active').length} activos</div></div>`;
-
-  const opList=document.getElementById('op-list');
+function renderOperators(ops) {
+  const list=document.getElementById('op-list');
   if(!ops.length){
-    opList.innerHTML='<div class="emp" style="padding:1.5rem 0"><p>Aún no hay operadores.<br>Agrega el primero con el botón de arriba.</p></div>';
-  } else {
-    opList.innerHTML=ops.map(op=>{
-      const link=BASE_URL+'?op='+op.code;
-      const opRecs=recs.filter(r=>r.opCode===op.code).length;
-      return `<div class="op-card">
-        <div class="op-top">
-          <div class="op-av">${initials(op.name)}</div>
-          <div class="op-info"><div class="op-name">${op.name}</div><div class="op-loc">${op.location}</div></div>
-          <div class="dot ${op.status==='active'?'don':'dof'}"></div>
-        </div>
-        <div class="op-link-row">${link}</div>
-        <div class="op-recs">${opRecs} registro${opRecs!==1?'s':''}</div>
-        <div class="op-actions">
-          <button class="bsm bsm-copy" onclick="copyLink('${link}','${op.name.split(' ')[0]}')">Copiar link</button>
-          <button class="bsm ${op.status==='revoked'?'bsm-success':'bsm-danger'}" onclick="toggleOp('${op.code}')">${op.status==='active'?'Revocar':'Restaurar'}</button>
-          <button class="bsm bsm-danger" onclick="deleteOp('${op.code}')">Eliminar</button>
-        </div>
-      </div>`;
-    }).join('');
+    list.innerHTML='<div class="emp" style="padding:1.5rem 0"><p>Aún no hay operadores.<br>Agrega el primero con el botón de arriba.</p></div>';
+    return;
   }
-
-  const admRecs=document.getElementById('adm-recs');
-  if(!recs.length){
-    admRecs.innerHTML='<div class="emp" style="padding:1.5rem 0"><p>Sin registros todavía.</p></div>';
-  } else {
-    admRecs.innerHTML=recs.map(r=>`
-      <div class="adm-rec-card">
-        <div class="rtop"><span class="rsku">${r.sku}</span><span class="rtime">${r.dt}</span></div>
-        <div class="rchips"><span class="chip cbox">Caja: ${r.box}</span><span class="chip cusr">${r.opName}</span><span class="chip" style="color:var(--t3)">${r.location||''}</span>${r.notes?`<span class="chip">${r.notes}</span>`:''}</div>
-      </div>`).join('');
-  }
+  list.innerHTML=ops.map(op=>{
+    const link=BASE+'?op='+op.code;
+    return `<div class="op-card">
+      <div class="op-top">
+        <div class="op-av">${initials(op.name)}</div>
+        <div class="op-info"><div class="op-name">${op.name}</div><div class="op-loc">${op.location}</div></div>
+        <div class="dot ${op.status==='active'?'don':'dof'}"></div>
+      </div>
+      <div class="op-link-row">${link}</div>
+      <div class="op-actions">
+        <button class="bsm bsm-copy" onclick="copyLink('${link}','${op.name.split(' ')[0]}')">Copiar link</button>
+        <button class="bsm ${op.status==='revoked'?'bsm-success':'bsm-danger'}" onclick="toggleOp('${op.code}')">${op.status==='active'?'Revocar':'Restaurar'}</button>
+        <button class="bsm bsm-danger" onclick="deleteOp('${op.code}')">Eliminar</button>
+      </div>
+    </div>`;
+  }).join('');
 }
 
 // ── GESTIÓN OPERADORES ──
-function openModal(){
-  ['m-name','m-loc','m-code'].forEach(id=>document.getElementById(id).value='');
+function openModal() {
+  ['m-name','m-loc'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('modal-bg').classList.add('open');
   setTimeout(()=>document.getElementById('m-name').focus(),100);
 }
-function closeModal(){ document.getElementById('modal-bg').classList.remove('open'); }
+function closeModal() { document.getElementById('modal-bg').classList.remove('open'); }
 
-function saveOperator(){
+async function saveOperator() {
   const name=document.getElementById('m-name').value.trim();
   const loc =document.getElementById('m-loc').value.trim();
   if(!name){toast('Ingresa el nombre','er');return}
   if(!loc) {toast('Ingresa la ubicación','er');return}
-  const ops=loadOps();
-  const code=genCode(name);
-  ops.push({code,name,location:loc,status:'active',createdAt:new Date().toLocaleString('es-MX')});
-  saveOps(ops);
-  closeModal();
-  renderAdmin();
-  const link=BASE_URL+'?op='+code;
-  copyLink(link,name.split(' ')[0]);
+
+  const btn=document.getElementById('btn-save-op');
+  btn.disabled=true; btn.textContent='Guardando…';
+
+  try {
+    const res = await api({ action:'addOperator', code: ADMIN_CODE, name, location: loc });
+    if(res.error){ toast(res.error,'er'); }
+    else {
+      closeModal();
+      const link=BASE+'?op='+res.code;
+      copyLink(link, name.split(' ')[0]);
+      loadAdmin();
+    }
+  } catch(e){ toast('Error de conexión','er'); }
+
+  btn.disabled=false; btn.textContent='Guardar y copiar link';
 }
 
-function toggleOp(code){
-  const ops=loadOps();
-  const op=ops.find(o=>o.code===code);
-  if(!op)return;
-  op.status=op.status==='active'?'revoked':'active';
-  saveOps(ops); renderAdmin();
-  toast(op.status==='revoked'?'Acceso revocado':'Acceso restaurado',op.status==='revoked'?'er':'ok');
+async function toggleOp(code) {
+  try {
+    const res=await api({action:'toggleOperator', code:ADMIN_CODE, opCode:code});
+    if(res.error){toast(res.error,'er');return}
+    toast(res.status==='revoked'?'Acceso revocado':'Acceso restaurado', res.status==='revoked'?'er':'ok');
+    loadAdmin();
+  } catch(e){toast('Error de conexión','er')}
 }
 
-function deleteOp(code){
+async function deleteOp(code) {
   if(!confirm('¿Eliminar este operador? Sus registros se conservan.'))return;
-  saveOps(loadOps().filter(o=>o.code!==code));
-  renderAdmin();
-  toast('Operador eliminado','er');
+  try {
+    const res=await api({action:'deleteOperator', code:ADMIN_CODE, opCode:code});
+    if(res.error){toast(res.error,'er');return}
+    toast('Operador eliminado','er');
+    loadAdmin();
+  } catch(e){toast('Error de conexión','er')}
 }
 
-function copyLink(link,name){
+function copyLink(link, name) {
   const fb=()=>{
     const ta=document.createElement('textarea');
     ta.value=link; document.body.appendChild(ta); ta.select();
@@ -459,15 +532,18 @@ function copyLink(link,name){
   else fb();
 }
 
-function exportCSV(){
-  const recs=loadRecs();
-  if(!recs.length){toast('No hay registros para exportar','er');return}
-  const h=['ID','SKU','Caja','Operador','Ubicación','Fecha/Hora','Notas'];
-  const rows=recs.map(r=>[r.id,r.sku,r.box,r.opName,r.location||'',r.dt,r.notes||''].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(','));
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([[h.join(','),...rows].join('\n')],{type:'text/csv;charset=utf-8'}));
-  a.download='inventario_'+new Date().toISOString().split('T')[0]+'.csv'; a.click();
-  toast('CSV descargado','ok');
+async function exportCSV() {
+  try {
+    const res=await api({action:'getRecords', code:ADMIN_CODE});
+    const recs=res.records||[];
+    if(!recs.length){toast('No hay registros','er');return}
+    const h=['ID','SKU','Caja','Operador','Ubicación','Fecha/Hora','Notas'];
+    const rows=recs.map(r=>[r.id,r.sku,r.box,r.opName,r.location||'',r.dt,r.notes||''].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(','));
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([[h.join(','),...rows].join('\n')],{type:'text/csv;charset=utf-8'}));
+    a.download='inventario_'+new Date().toISOString().split('T')[0]+'.csv'; a.click();
+    toast('CSV descargado','ok');
+  } catch(e){toast('Error al exportar','er')}
 }
 
 function toast(msg,type='ok'){
