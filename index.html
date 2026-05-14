@@ -20,7 +20,6 @@
 }
 html,body{height:100%;background:var(--bg);color:var(--t);font-family:var(--sans);overflow-x:hidden}
 
-/* ── SHARED ── */
 .logo{font-size:1.05rem;font-weight:800;letter-spacing:-.03em}
 .logo span{color:var(--a)}
 label{display:block;font-size:.67rem;color:var(--t2);font-family:var(--mono);margin-bottom:.35rem;letter-spacing:.04em}
@@ -35,25 +34,25 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
 .btng{width:100%;padding:.68rem;background:transparent;color:var(--t3);border:1px solid var(--b);border-radius:var(--rs);font-family:var(--sans);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .15s;margin-top:.55rem}
 .btng:hover{border-color:var(--b2);color:var(--t2)}
 
-/* ── LOADING ── */
+/* LOADING */
 #loading{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;z-index:500}
 .spinner{width:32px;height:32px;border:2px solid var(--b2);border-top-color:var(--a);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-text{font-family:var(--mono);font-size:.72rem;color:var(--t3)}
 
-/* ── TOAST ── */
+/* TOAST */
 #toast{position:fixed;bottom:5rem;left:50%;transform:translateX(-50%) translateY(16px);background:var(--bg2);border:1px solid var(--b2);border-radius:var(--rs);padding:.6rem 1.1rem;font-family:var(--mono);font-size:.73rem;opacity:0;transition:all .2s;pointer-events:none;white-space:nowrap;z-index:999}
 #toast.s{opacity:1;transform:translateX(-50%) translateY(0)}
 #toast.ok{border-color:var(--a);color:var(--a)}
 #toast.er{border-color:var(--red);color:var(--red)}
 
-/* ── SIN ACCESO / REVOCADO ── */
+/* MENSAJES FULL */
 .full-msg{display:none;min-height:100vh;align-items:center;justify-content:center;flex-direction:column;padding:2rem;text-align:center}
 .full-msg.v{display:flex}
 .err-box{background:rgba(255,90,90,.07);border:1px solid rgba(255,90,90,.18);border-radius:var(--r);padding:1.2rem 1.4rem;margin-top:1.5rem;max-width:300px}
 .err-box p{font-family:var(--mono);font-size:.75rem;color:var(--red);line-height:1.7}
 
-/* ── OPERADOR APP ── */
+/* OPERADOR APP */
 #op-app{display:none;flex-direction:column;min-height:100vh}
 #op-app.v{display:flex}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:.82rem 1.1rem;border-bottom:1px solid var(--b);background:var(--bg);position:sticky;top:0;z-index:10}
@@ -65,18 +64,26 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
 .tc{display:none}.tc.a{display:block}
 .card{background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);padding:1.3rem;margin-bottom:1rem}
 .clbl{font-family:var(--mono);font-size:.64rem;color:var(--t3);letter-spacing:.09em;text-transform:uppercase;margin-bottom:1rem}
-.cambox{background:#000;border-radius:var(--rs);aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:1rem;cursor:pointer;position:relative;overflow:hidden;border:1px solid var(--b2);transition:border-color .2s}
-.cambox:hover{border-color:var(--ab)}
-.cx{width:110px;height:70px;position:relative}
-.cc{position:absolute;width:22px;height:22px;border:2px solid var(--a)}
-.c1{top:0;left:0;border-right:none;border-bottom:none;border-radius:3px 0 0 0}
-.c2{top:0;right:0;border-left:none;border-bottom:none;border-radius:0 3px 0 0}
-.c3{bottom:0;left:0;border-right:none;border-top:none;border-radius:0 0 0 3px}
-.c4{bottom:0;right:0;border-left:none;border-top:none;border-radius:0 0 3px 0}
-.chint{font-family:var(--mono);font-size:.7rem;color:var(--t3);margin-top:1rem;transition:color .2s}
-.cambox:hover .chint{color:var(--a)}
-@keyframes sl{0%{top:12%}100%{top:85%}}
-.sline{position:absolute;left:8%;right:8%;height:1.5px;background:var(--a);opacity:.85;box-shadow:0 0 8px var(--a);animation:sl 1.4s ease-in-out infinite alternate}
+
+/* CÁMARA REAL */
+#scanner-wrap{position:relative;width:100%;border-radius:var(--rs);overflow:hidden;background:#000;margin-bottom:1rem;border:1px solid var(--b2)}
+#scanner-video{width:100%;display:block;aspect-ratio:4/3;object-fit:cover}
+#scanner-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+.scan-frame{width:200px;height:130px;position:relative}
+.sf-corner{position:absolute;width:24px;height:24px;border:2.5px solid var(--a)}
+.sf-tl{top:0;left:0;border-right:none;border-bottom:none;border-radius:3px 0 0 0}
+.sf-tr{top:0;right:0;border-left:none;border-bottom:none;border-radius:0 3px 0 0}
+.sf-bl{bottom:0;left:0;border-right:none;border-top:none;border-radius:0 0 0 3px}
+.sf-br{bottom:0;right:0;border-left:none;border-top:none;border-radius:0 0 3px 0}
+@keyframes scanbeam{0%{top:8%}100%{top:88%}}
+.scan-beam{position:absolute;left:5%;right:5%;height:2px;background:var(--a);box-shadow:0 0 8px var(--a);animation:scanbeam 1.6s ease-in-out infinite alternate;opacity:.9}
+#scanner-hint{font-family:var(--mono);font-size:.68rem;color:rgba(255,255,255,.5);margin-top:10px;text-align:center}
+#scanner-success{position:absolute;inset:0;background:rgba(200,240,96,.15);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+.btn-scan{width:100%;padding:.78rem;background:var(--bg3);border:1px solid var(--b2);border-radius:var(--rs);color:var(--a);font-family:var(--sans);font-size:.86rem;font-weight:700;cursor:pointer;transition:all .15s;margin-bottom:.8rem;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-scan:hover{border-color:var(--ab);background:var(--ad)}
+.btn-scan svg{width:20px;height:20px}
+.btn-scan.active{background:var(--ad);border-color:var(--ab)}
+
 .skud{background:var(--bg3);border:1px solid var(--b);border-radius:var(--rs);padding:.7rem .9rem;font-family:var(--mono);font-size:1rem;font-weight:500;color:var(--a);min-height:44px;display:flex;align-items:center}
 .skud.e{color:var(--t3);font-size:.75rem;font-weight:400}
 .fbox label{color:var(--a)}
@@ -102,7 +109,7 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
 .nb svg{width:21px;height:21px}
 .nb span{font-size:.56rem;font-weight:600;letter-spacing:.04em}
 
-/* ── ADMIN ── */
+/* ADMIN */
 #adm{display:none;min-height:100vh;padding:1.4rem 1rem 3rem;max-width:640px;margin:0 auto}
 #adm.v{display:block}
 .adm-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.3rem}
@@ -115,7 +122,6 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
 .sv{font-size:1.7rem;font-weight:800;line-height:1}
 .ss{font-family:var(--mono);font-size:.62rem;color:var(--t2);margin-top:.2rem}
 .op-card{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:.85rem 1rem;margin-bottom:.6rem}
-.op-card:hover{border-color:var(--b2)}
 .op-top{display:flex;align-items:center;gap:10px;margin-bottom:.6rem}
 .op-av{width:34px;height:34px;border-radius:50%;background:var(--ad);border:1px solid var(--ab);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;color:var(--a);flex-shrink:0}
 .op-info{flex:1;min-width:0}
@@ -129,7 +135,6 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
 .bsm-success{border-color:var(--ab)!important;color:var(--a)!important}
 .bsm-copy:hover{border-color:var(--a);color:var(--a)}
 .op-link-row{background:var(--bg3);border-radius:6px;padding:.4rem .7rem;font-family:var(--mono);font-size:.62rem;color:var(--t3);word-break:break-all;line-height:1.5;margin-bottom:.3rem}
-.op-recs{font-family:var(--mono);font-size:.7rem;color:var(--t3)}
 .btn-add{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:.75rem;background:var(--ad);border:1px dashed var(--ab);border-radius:var(--rs);color:var(--a);font-family:var(--sans);font-size:.86rem;font-weight:700;cursor:pointer;transition:all .15s;margin-bottom:.6rem}
 .btn-add:hover{background:rgba(200,240,96,.18)}
 .btn-add svg{width:18px;height:18px}
@@ -180,18 +185,37 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
   <div class="omain">
     <div class="tc a" id="tab-scan">
       <div class="card">
-        <div class="clbl">Cámara</div>
-        <div class="cambox" onclick="doScan()">
-          <div class="cx"><div class="cc c1"></div><div class="cc c2"></div><div class="cc c3"></div><div class="cc c4"></div></div>
-          <div class="sline" id="sline" style="display:none"></div>
-          <div class="chint" id="chint">Toca para escanear</div>
+        <div class="clbl">Escáner</div>
+
+        <!-- Botón activar cámara -->
+        <button class="btn-scan" id="btn-cam" onclick="toggleCamera()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          Activar cámara
+        </button>
+
+        <!-- Visor de cámara (oculto hasta activar) -->
+        <div id="scanner-wrap" style="display:none">
+          <video id="scanner-video" playsinline autoplay muted></video>
+          <div id="scanner-overlay">
+            <div class="scan-frame">
+              <div class="sf-corner sf-tl"></div>
+              <div class="sf-corner sf-tr"></div>
+              <div class="sf-corner sf-bl"></div>
+              <div class="sf-corner sf-br"></div>
+              <div class="scan-beam"></div>
+            </div>
+            <div id="scanner-hint">Apunta al código de barras</div>
+          </div>
+          <div id="scanner-success"></div>
         </div>
-        <div class="fg">
+
+        <div class="fg" style="margin-top:.5rem">
           <label>O ingresa el código manualmente</label>
-          <input type="text" id="fsku" placeholder="750666609800…" oninput="onSku(this.value)" autocomplete="off">
+          <input type="text" id="fsku" placeholder="750666609800…" oninput="onSku(this.value)" autocomplete="off" inputmode="numeric">
         </div>
         <div class="fg"><label>SKU capturado</label><div class="skud e" id="skud">— sin escanear —</div></div>
       </div>
+
       <div class="card">
         <div class="clbl">Datos del registro</div>
         <div class="fg fbox"><label># de caja</label><input type="text" id="fbox" placeholder="CAJA-042" maxlength="30"></div>
@@ -200,10 +224,11 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
           <div class="fg"><label>Fecha y hora</label><input type="text" id="fdt" readonly></div>
         </div>
         <div class="fg"><label>Notas (opcional)</label><input type="text" id="fnotes" placeholder="Observaciones…" maxlength="120"></div>
-        <button class="btnp" id="bsave" onclick="save()" disabled>Guardar registro</button>
+        <button class="btnp" id="bsave" onclick="saveRecord()" disabled>Guardar registro</button>
         <button class="btng" onclick="resetForm()">Limpiar</button>
       </div>
     </div>
+
     <div class="tc" id="tab-records">
       <div class="rh"><h3>Mis registros</h3><span class="rcnt" id="rcnt">0 entradas</span></div>
       <div id="rlist"></div>
@@ -259,19 +284,42 @@ input[type=text]:read-only{color:var(--t2);opacity:.6;cursor:not-allowed}
 
 <div id="toast"></div>
 
+<!-- ZXing para escaneo real -->
+<script src="https://unpkg.com/@zxing/library@0.19.1/umd/index.min.js"></script>
 <script>
-// ── CONFIGURACIÓN ──
-const API  = 'https://script.google.com/macros/s/AKfycbxxQ2C00cqPfAEMu-IhPX8-1msVg7gIYYARToCqs50EJo9bRE0zYdKIw2wf1rmGH-dBEg/exec';
-const BASE = 'https://rossyf.github.io/scanstock/';
+// ── CONFIG ──
+const API        = 'https://script.google.com/macros/s/AKfycbxxQ2C00cqPfAEMu-IhPX8-1msVg7gIYYARToCqs50EJo9bRE0zYdKIw2wf1rmGH-dBEg/exec';
+const BASE       = 'https://rossyf.github.io/scanstock/';
 const ADMIN_CODE = 'admin';
 
-const DEMO = ['7506666098000','6098001234567','8437006563014','5010555048879','4902430015127'];
-let di=0, currentOp=null, scannedSku='', allRecs=[];
+let currentOp = null;
+let scannedSku = '';
+let codeReader = null;
+let cameraActive = false;
+let scanCooldown = false;
 
-// ── API ──
+// ── JSONP (evita CORS) ──
 function api(params) {
-  const url = API + '?' + new URLSearchParams(params).toString();
-  return fetch(url).then(r => r.json());
+  return new Promise((resolve, reject) => {
+    const cbName = 'cb_' + Math.random().toString(36).slice(2);
+    const timeout = setTimeout(() => {
+      delete window[cbName];
+      reject(new Error('Timeout'));
+    }, 15000);
+
+    window[cbName] = (data) => {
+      clearTimeout(timeout);
+      delete window[cbName];
+      resolve(data);
+    };
+
+    const qs = new URLSearchParams({...params, callback: cbName}).toString();
+    const s = document.createElement('script');
+    s.src = API + '?' + qs;
+    s.onerror = () => { clearTimeout(timeout); delete window[cbName]; reject(new Error('Error de red')); };
+    document.head.appendChild(s);
+    setTimeout(() => { if(s.parentNode) s.parentNode.removeChild(s); }, 16000);
+  });
 }
 
 function initials(n){ return n.trim().split(' ').map(w=>w[0]||'').join('').toUpperCase().slice(0,2); }
@@ -281,38 +329,31 @@ window.addEventListener('DOMContentLoaded', async () => {
   const p    = new URLSearchParams(window.location.search);
   const code = p.get('op') || p.get('u') || '';
 
-  if (!code) { hide(); show('no-access'); return; }
+  if (!code) { hideLoading(); show('no-access'); return; }
 
   if (code === ADMIN_CODE) {
-    hide();
+    hideLoading();
     document.getElementById('adm').classList.add('v');
     loadAdmin();
     return;
   }
 
-  // verificar operador en Sheets
-  setLoading('Verificando acceso…');
+  setLoadingText('Verificando acceso…');
   try {
-    const data = await api({ action:'getOperator', code });
-    if (data.error) { hide(); show('no-access'); return; }
-    if (data.status === 'revoked') { hide(); show('revoked'); return; }
+    const data = await api({ action: 'getOperator', code });
+    if (data.error) { hideLoading(); show('no-access'); return; }
+    if (data.status === 'revoked') { hideLoading(); show('revoked'); return; }
     currentOp = data;
-    hide();
+    hideLoading();
     startOpApp();
   } catch(e) {
-    hide(); show('no-access');
+    hideLoading(); show('no-access');
   }
 });
 
-function hide() {
-  document.getElementById('loading').style.display = 'none';
-}
-function show(id) {
-  document.getElementById(id).classList.add('v');
-}
-function setLoading(msg) {
-  document.getElementById('loading-text').textContent = msg;
-}
+function hideLoading() { document.getElementById('loading').style.display = 'none'; }
+function show(id) { document.getElementById(id).classList.add('v'); }
+function setLoadingText(t) { document.getElementById('loading-text').textContent = t; }
 
 // ── OPERADOR ──
 function startOpApp() {
@@ -327,36 +368,116 @@ function startOpApp() {
 
 function tick() {
   const n = new Date();
-  document.getElementById('fdt').value = n.toLocaleDateString('es-MX') + ' ' + n.toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('fdt').value = n.toLocaleDateString('es-MX') + ' ' +
+    n.toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'});
 }
 
-function doScan() {
-  const sl=document.getElementById('sline'), ch=document.getElementById('chint');
-  sl.style.display='block'; ch.textContent='Escaneando…';
-  setTimeout(()=>{
-    sl.style.display='none'; ch.textContent='Toca para escanear';
-    const s=DEMO[di%DEMO.length]; di++;
-    setSku(s); document.getElementById('fsku').value=s;
-  }, 1400);
+// ── CÁMARA REAL ──
+async function toggleCamera() {
+  if (cameraActive) {
+    stopCamera();
+    return;
+  }
+  startCamera();
 }
 
+async function startCamera() {
+  const wrap = document.getElementById('scanner-wrap');
+  const btn  = document.getElementById('btn-cam');
+
+  try {
+    codeReader = new ZXing.BrowserMultiFormatReader();
+    const devices = await ZXing.BrowserCodeReader.listVideoInputDevices();
+
+    if (!devices || devices.length === 0) {
+      toast('No se encontró cámara en este dispositivo', 'er'); return;
+    }
+
+    // preferir cámara trasera
+    const backCam = devices.find(d =>
+      d.label.toLowerCase().includes('back') ||
+      d.label.toLowerCase().includes('rear') ||
+      d.label.toLowerCase().includes('trasera') ||
+      d.label.toLowerCase().includes('environment')
+    ) || devices[devices.length - 1];
+
+    wrap.style.display = 'block';
+    btn.textContent = 'Detener cámara';
+    btn.classList.add('active');
+    cameraActive = true;
+
+    await codeReader.decodeFromVideoDevice(backCam.deviceId, 'scanner-video', (result, err) => {
+      if (result && !scanCooldown) {
+        scanCooldown = true;
+        const code = result.getText();
+        onScanSuccess(code);
+        setTimeout(() => { scanCooldown = false; }, 3000);
+      }
+    });
+  } catch(e) {
+    toast('Error al acceder a la cámara. Verifica los permisos.', 'er');
+    stopCamera();
+  }
+}
+
+function stopCamera() {
+  if (codeReader) {
+    codeReader.reset();
+    codeReader = null;
+  }
+  const wrap = document.getElementById('scanner-wrap');
+  const btn  = document.getElementById('btn-cam');
+  const video = document.getElementById('scanner-video');
+
+  // detener stream
+  if (video.srcObject) {
+    video.srcObject.getTracks().forEach(t => t.stop());
+    video.srcObject = null;
+  }
+
+  wrap.style.display = 'none';
+  btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg> Activar cámara`;
+  btn.classList.remove('active');
+  cameraActive = false;
+}
+
+function onScanSuccess(code) {
+  // flash visual
+  const s = document.getElementById('scanner-success');
+  s.style.opacity = '1';
+  setTimeout(() => s.style.opacity = '0', 400);
+
+  setSku(code);
+  document.getElementById('fsku').value = code;
+
+  // vibrar si disponible
+  if (navigator.vibrate) navigator.vibrate(100);
+
+  // detener cámara automáticamente tras scan exitoso
+  setTimeout(() => stopCamera(), 600);
+
+  toast('Código escaneado', 'ok');
+}
+
+// ── SKU ──
 function onSku(v) {
-  if(v.length>=6) setSku(v.trim());
+  if(v.length >= 6) setSku(v.trim());
   else { scannedSku=''; setSkuD('','e'); document.getElementById('bsave').disabled=true; }
 }
 function setSku(v) { scannedSku=v; setSkuD(v,''); document.getElementById('bsave').disabled=false; }
 function setSkuD(v,c) {
-  const d=document.getElementById('skud');
-  d.textContent=v||'— sin escanear —';
-  d.className='skud'+(c?' '+c:'');
+  const d = document.getElementById('skud');
+  d.textContent = v || '— sin escanear —';
+  d.className = 'skud' + (c ? ' '+c : '');
 }
 
-async function save() {
-  if(!scannedSku){toast('Escanea o ingresa un código','er');return}
-  const box=document.getElementById('fbox').value.trim();
-  if(!box){toast('Ingresa el # de caja','er');return}
+// ── GUARDAR REGISTRO ──
+async function saveRecord() {
+  if(!scannedSku){ toast('Escanea o ingresa un código','er'); return; }
+  const box = document.getElementById('fbox').value.trim();
+  if(!box){ toast('Ingresa el # de caja','er'); return; }
 
-  const btn=document.getElementById('bsave');
+  const btn = document.getElementById('bsave');
   btn.disabled=true; btn.textContent='Guardando…';
 
   try {
@@ -370,37 +491,37 @@ async function save() {
     });
     if(res.error){ toast(res.error,'er'); }
     else { toast('Registro guardado','ok'); resetForm(); loadMyRecs(); }
-  } catch(e) {
-    toast('Error de conexión','er');
-  }
+  } catch(e) { toast('Error de conexión','er'); }
+
   btn.disabled=false; btn.textContent='Guardar registro';
 }
 
 function resetForm() {
-  ['fsku','fbox','fnotes'].forEach(id=>document.getElementById(id).value='');
+  ['fsku','fbox','fnotes'].forEach(id => document.getElementById(id).value='');
   scannedSku=''; setSkuD('','e');
   document.getElementById('bsave').disabled=true;
 }
 
+// ── MIS REGISTROS ──
 async function loadMyRecs() {
   document.getElementById('rlist').innerHTML='<div class="emp"><p>Cargando…</p></div>';
   try {
     const res = await api({ action:'getRecords', code: currentOp.code });
     renderRecs(res.records||[], 'rlist', 'rcnt', false);
   } catch(e) {
-    document.getElementById('rlist').innerHTML='<div class="emp"><p>Error al cargar registros.</p></div>';
+    document.getElementById('rlist').innerHTML='<div class="emp"><p>Error al cargar.</p></div>';
   }
 }
 
 function renderRecs(recs, listId, cntId, isAdmin) {
-  const list=document.getElementById(listId);
-  const cnt =document.getElementById(cntId);
-  if(cnt) cnt.textContent=recs.length+(recs.length===1?' entrada':' entradas');
+  const list = document.getElementById(listId);
+  const cnt  = cntId ? document.getElementById(cntId) : null;
+  if(cnt) cnt.textContent = recs.length + (recs.length===1?' entrada':' entradas');
   if(!recs.length){
     list.innerHTML='<div class="emp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg><p>Sin registros todavía.</p></div>';
     return;
   }
-  list.innerHTML=recs.map(r=>`
+  list.innerHTML = recs.map(r => `
     <div class="${isAdmin?'adm-rec-card':'rcard'}">
       <div class="rtop"><span class="rsku">${r.sku}</span><span class="rtime">${r.dt}</span></div>
       <div class="rchips">
@@ -419,11 +540,11 @@ function goTab(tab) {
   document.getElementById('tab-'+tab)?.classList.add('a');
   document.getElementById('nav-'+tab)?.classList.add('a');
   if(tab==='records') loadMyRecs();
+  if(tab==='scan' && cameraActive) stopCamera();
 }
 
 // ── ADMIN ──
 async function loadAdmin() {
-  // stats
   try {
     const s = await api({ action:'getStats', code: ADMIN_CODE });
     document.getElementById('stats').innerHTML=`
@@ -433,28 +554,25 @@ async function loadAdmin() {
       <div class="sc"><div class="sl">OPERADORES</div><div class="sv">${s.activeOps||0}</div><div class="ss">activos de ${s.totalOps||0}</div></div>`;
   } catch(e){}
 
-  // operadores
   try {
     const res = await api({ action:'getOperators', code: ADMIN_CODE });
     renderOperators(res.operators||[]);
   } catch(e){}
 
-  // registros
   try {
     const res = await api({ action:'getRecords', code: ADMIN_CODE });
-    allRecs = res.records||[];
-    renderRecs(allRecs, 'adm-recs', null, true);
+    renderRecs(res.records||[], 'adm-recs', null, true);
   } catch(e){}
 }
 
 function renderOperators(ops) {
-  const list=document.getElementById('op-list');
+  const list = document.getElementById('op-list');
   if(!ops.length){
     list.innerHTML='<div class="emp" style="padding:1.5rem 0"><p>Aún no hay operadores.<br>Agrega el primero con el botón de arriba.</p></div>';
     return;
   }
-  list.innerHTML=ops.map(op=>{
-    const link=BASE+'?op='+op.code;
+  list.innerHTML = ops.map(op => {
+    const link = BASE + '?op=' + op.code;
     return `<div class="op-card">
       <div class="op-top">
         <div class="op-av">${initials(op.name)}</div>
@@ -471,7 +589,6 @@ function renderOperators(ops) {
   }).join('');
 }
 
-// ── GESTIÓN OPERADORES ──
 function openModal() {
   ['m-name','m-loc'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('modal-bg').classList.add('open');
@@ -480,12 +597,12 @@ function openModal() {
 function closeModal() { document.getElementById('modal-bg').classList.remove('open'); }
 
 async function saveOperator() {
-  const name=document.getElementById('m-name').value.trim();
-  const loc =document.getElementById('m-loc').value.trim();
-  if(!name){toast('Ingresa el nombre','er');return}
-  if(!loc) {toast('Ingresa la ubicación','er');return}
+  const name = document.getElementById('m-name').value.trim();
+  const loc  = document.getElementById('m-loc').value.trim();
+  if(!name){ toast('Ingresa el nombre','er'); return; }
+  if(!loc) { toast('Ingresa la ubicación','er'); return; }
 
-  const btn=document.getElementById('btn-save-op');
+  const btn = document.getElementById('btn-save-op');
   btn.disabled=true; btn.textContent='Guardando…';
 
   try {
@@ -493,7 +610,7 @@ async function saveOperator() {
     if(res.error){ toast(res.error,'er'); }
     else {
       closeModal();
-      const link=BASE+'?op='+res.code;
+      const link = BASE + '?op=' + res.code;
       copyLink(link, name.split(' ')[0]);
       loadAdmin();
     }
@@ -504,26 +621,26 @@ async function saveOperator() {
 
 async function toggleOp(code) {
   try {
-    const res=await api({action:'toggleOperator', code:ADMIN_CODE, opCode:code});
-    if(res.error){toast(res.error,'er');return}
+    const res = await api({ action:'toggleOperator', code: ADMIN_CODE, opCode: code });
+    if(res.error){ toast(res.error,'er'); return; }
     toast(res.status==='revoked'?'Acceso revocado':'Acceso restaurado', res.status==='revoked'?'er':'ok');
     loadAdmin();
-  } catch(e){toast('Error de conexión','er')}
+  } catch(e){ toast('Error de conexión','er'); }
 }
 
 async function deleteOp(code) {
-  if(!confirm('¿Eliminar este operador? Sus registros se conservan.'))return;
+  if(!confirm('¿Eliminar este operador? Sus registros se conservan.')) return;
   try {
-    const res=await api({action:'deleteOperator', code:ADMIN_CODE, opCode:code});
-    if(res.error){toast(res.error,'er');return}
+    const res = await api({ action:'deleteOperator', code: ADMIN_CODE, opCode: code });
+    if(res.error){ toast(res.error,'er'); return; }
     toast('Operador eliminado','er');
     loadAdmin();
-  } catch(e){toast('Error de conexión','er')}
+  } catch(e){ toast('Error de conexión','er'); }
 }
 
 function copyLink(link, name) {
-  const fb=()=>{
-    const ta=document.createElement('textarea');
+  const fb = () => {
+    const ta = document.createElement('textarea');
     ta.value=link; document.body.appendChild(ta); ta.select();
     document.execCommand('copy'); document.body.removeChild(ta);
     toast('Link de '+name+' copiado','ok');
@@ -534,25 +651,29 @@ function copyLink(link, name) {
 
 async function exportCSV() {
   try {
-    const res=await api({action:'getRecords', code:ADMIN_CODE});
-    const recs=res.records||[];
-    if(!recs.length){toast('No hay registros','er');return}
-    const h=['ID','SKU','Caja','Operador','Ubicación','Fecha/Hora','Notas'];
-    const rows=recs.map(r=>[r.id,r.sku,r.box,r.opName,r.location||'',r.dt,r.notes||''].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(','));
-    const a=document.createElement('a');
-    a.href=URL.createObjectURL(new Blob([[h.join(','),...rows].join('\n')],{type:'text/csv;charset=utf-8'}));
-    a.download='inventario_'+new Date().toISOString().split('T')[0]+'.csv'; a.click();
+    const res = await api({ action:'getRecords', code: ADMIN_CODE });
+    const recs = res.records||[];
+    if(!recs.length){ toast('No hay registros','er'); return; }
+    const h = ['ID','SKU','Caja','Operador','Ubicación','Fecha/Hora','Notas'];
+    const rows = recs.map(r=>[r.id,r.sku,r.box,r.opName,r.location||'',r.dt,r.notes||'']
+      .map(v=>`"${String(v).replace(/"/g,'""')}"`).join(','));
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([[h.join(','),...rows].join('\n')],{type:'text/csv;charset=utf-8'}));
+    a.download = 'inventario_'+new Date().toISOString().split('T')[0]+'.csv';
+    a.click();
     toast('CSV descargado','ok');
-  } catch(e){toast('Error al exportar','er')}
+  } catch(e){ toast('Error al exportar','er'); }
 }
 
-function toast(msg,type='ok'){
-  const t=document.getElementById('toast');
+function toast(msg, type='ok') {
+  const t = document.getElementById('toast');
   t.textContent=msg; t.className='s '+type;
   setTimeout(()=>t.className='',2400);
 }
 
-document.getElementById('modal-bg').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
+document.getElementById('modal-bg').addEventListener('click', e=>{
+  if(e.target===e.currentTarget) closeModal();
+});
 </script>
 </body>
 </html>
